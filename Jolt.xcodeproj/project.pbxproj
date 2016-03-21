@@ -1,0 +1,772 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5CF686CF1CA0AD1000000F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */; };
+		5CF686D11CA0AD1000000F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686D01CA0AD1000000F4D /* ViewController.swift */; };
+		5CF686D41CA0AD1000000F4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D21CA0AD1000000F4D /* Main.storyboard */; };
+		5CF686D61CA0AD1000000F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D51CA0AD1000000F4D /* Assets.xcassets */; };
+		5CF686D91CA0AD1000000F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D71CA0AD1000000F4D /* LaunchScreen.storyboard */; };
+		5CF686E41CA0AD1000000F4D /* JoltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686E31CA0AD1000000F4D /* JoltTests.swift */; };
+		5CF686EF1CA0AD1000000F4D /* JoltUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686EE1CA0AD1000000F4D /* JoltUITests.swift */; };
+		5CF686F41CA0AD1000000F4D /* Jolt WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5CF686F31CA0AD1000000F4D /* Jolt WatchKit App.app */; };
+		5CF686FA1CA0AD1000000F4D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686F81CA0AD1000000F4D /* Interface.storyboard */; };
+		5CF686FC1CA0AD1000000F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686FB1CA0AD1000000F4D /* Assets.xcassets */; };
+		5CF687031CA0AD1000000F4D /* Jolt WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5CF687021CA0AD1000000F4D /* Jolt WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5CF6870A1CA0AD1000000F4D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF687091CA0AD1000000F4D /* InterfaceController.swift */; };
+		5CF6870C1CA0AD1000000F4D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */; };
+		5CF6870E1CA0AD1000000F4D /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF6870D1CA0AD1000000F4D /* NotificationController.swift */; };
+		5CF687101CA0AD1000000F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF6870F1CA0AD1000000F4D /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5CF686E01CA0AD1000000F4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CF686C31CA0AD0F00000F4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CF686CA1CA0AD1000000F4D;
+			remoteInfo = Jolt;
+		};
+		5CF686EB1CA0AD1000000F4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CF686C31CA0AD0F00000F4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CF686CA1CA0AD1000000F4D;
+			remoteInfo = Jolt;
+		};
+		5CF686F51CA0AD1000000F4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CF686C31CA0AD0F00000F4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CF686F21CA0AD1000000F4D;
+			remoteInfo = "Jolt WatchKit App";
+		};
+		5CF687041CA0AD1000000F4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CF686C31CA0AD0F00000F4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CF687011CA0AD1000000F4D;
+			remoteInfo = "Jolt WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5CF687171CA0AD1000000F4D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5CF687031CA0AD1000000F4D /* Jolt WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF6871B1CA0AD1000000F4D /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				5CF686F41CA0AD1000000F4D /* Jolt WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5CF686CB1CA0AD1000000F4D /* Jolt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jolt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5CF686D01CA0AD1000000F4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5CF686D31CA0AD1000000F4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5CF686D51CA0AD1000000F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5CF686D81CA0AD1000000F4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5CF686DA1CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CF686DF1CA0AD1000000F4D /* JoltTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JoltTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CF686E31CA0AD1000000F4D /* JoltTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoltTests.swift; sourceTree = "<group>"; };
+		5CF686E51CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CF686EA1CA0AD1000000F4D /* JoltUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JoltUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CF686EE1CA0AD1000000F4D /* JoltUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoltUITests.swift; sourceTree = "<group>"; };
+		5CF686F01CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CF686F31CA0AD1000000F4D /* Jolt WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jolt WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CF686F91CA0AD1000000F4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		5CF686FB1CA0AD1000000F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5CF686FD1CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CF687021CA0AD1000000F4D /* Jolt WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Jolt WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CF687081CA0AD1000000F4D /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		5CF687091CA0AD1000000F4D /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		5CF6870D1CA0AD1000000F4D /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		5CF6870F1CA0AD1000000F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5CF687111CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5CF686C81CA0AD1000000F4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686DC1CA0AD1000000F4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686E71CA0AD1000000F4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686FF1CA0AD1000000F4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5CF686C21CA0AD0F00000F4D = {
+			isa = PBXGroup;
+			children = (
+				5CF686CD1CA0AD1000000F4D /* Jolt */,
+				5CF686E21CA0AD1000000F4D /* JoltTests */,
+				5CF686ED1CA0AD1000000F4D /* JoltUITests */,
+				5CF686F71CA0AD1000000F4D /* Jolt WatchKit App */,
+				5CF687061CA0AD1000000F4D /* Jolt WatchKit Extension */,
+				5CF686CC1CA0AD1000000F4D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5CF686CC1CA0AD1000000F4D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5CF686CB1CA0AD1000000F4D /* Jolt.app */,
+				5CF686DF1CA0AD1000000F4D /* JoltTests.xctest */,
+				5CF686EA1CA0AD1000000F4D /* JoltUITests.xctest */,
+				5CF686F31CA0AD1000000F4D /* Jolt WatchKit App.app */,
+				5CF687021CA0AD1000000F4D /* Jolt WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5CF686CD1CA0AD1000000F4D /* Jolt */ = {
+			isa = PBXGroup;
+			children = (
+				5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */,
+				5CF686D01CA0AD1000000F4D /* ViewController.swift */,
+				5CF686D21CA0AD1000000F4D /* Main.storyboard */,
+				5CF686D51CA0AD1000000F4D /* Assets.xcassets */,
+				5CF686D71CA0AD1000000F4D /* LaunchScreen.storyboard */,
+				5CF686DA1CA0AD1000000F4D /* Info.plist */,
+			);
+			path = Jolt;
+			sourceTree = "<group>";
+		};
+		5CF686E21CA0AD1000000F4D /* JoltTests */ = {
+			isa = PBXGroup;
+			children = (
+				5CF686E31CA0AD1000000F4D /* JoltTests.swift */,
+				5CF686E51CA0AD1000000F4D /* Info.plist */,
+			);
+			path = JoltTests;
+			sourceTree = "<group>";
+		};
+		5CF686ED1CA0AD1000000F4D /* JoltUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5CF686EE1CA0AD1000000F4D /* JoltUITests.swift */,
+				5CF686F01CA0AD1000000F4D /* Info.plist */,
+			);
+			path = JoltUITests;
+			sourceTree = "<group>";
+		};
+		5CF686F71CA0AD1000000F4D /* Jolt WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				5CF686F81CA0AD1000000F4D /* Interface.storyboard */,
+				5CF686FB1CA0AD1000000F4D /* Assets.xcassets */,
+				5CF686FD1CA0AD1000000F4D /* Info.plist */,
+			);
+			path = "Jolt WatchKit App";
+			sourceTree = "<group>";
+		};
+		5CF687061CA0AD1000000F4D /* Jolt WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5CF687091CA0AD1000000F4D /* InterfaceController.swift */,
+				5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */,
+				5CF6870D1CA0AD1000000F4D /* NotificationController.swift */,
+				5CF6870F1CA0AD1000000F4D /* Assets.xcassets */,
+				5CF687111CA0AD1000000F4D /* Info.plist */,
+				5CF687071CA0AD1000000F4D /* Supporting Files */,
+			);
+			path = "Jolt WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		5CF687071CA0AD1000000F4D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5CF687081CA0AD1000000F4D /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5CF686CA1CA0AD1000000F4D /* Jolt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5CF6871C1CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt" */;
+			buildPhases = (
+				5CF686C71CA0AD1000000F4D /* Sources */,
+				5CF686C81CA0AD1000000F4D /* Frameworks */,
+				5CF686C91CA0AD1000000F4D /* Resources */,
+				5CF6871B1CA0AD1000000F4D /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5CF686F61CA0AD1000000F4D /* PBXTargetDependency */,
+			);
+			name = Jolt;
+			productName = Jolt;
+			productReference = 5CF686CB1CA0AD1000000F4D /* Jolt.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5CF686DE1CA0AD1000000F4D /* JoltTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5CF6871F1CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "JoltTests" */;
+			buildPhases = (
+				5CF686DB1CA0AD1000000F4D /* Sources */,
+				5CF686DC1CA0AD1000000F4D /* Frameworks */,
+				5CF686DD1CA0AD1000000F4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5CF686E11CA0AD1000000F4D /* PBXTargetDependency */,
+			);
+			name = JoltTests;
+			productName = JoltTests;
+			productReference = 5CF686DF1CA0AD1000000F4D /* JoltTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5CF686E91CA0AD1000000F4D /* JoltUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5CF687221CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "JoltUITests" */;
+			buildPhases = (
+				5CF686E61CA0AD1000000F4D /* Sources */,
+				5CF686E71CA0AD1000000F4D /* Frameworks */,
+				5CF686E81CA0AD1000000F4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5CF686EC1CA0AD1000000F4D /* PBXTargetDependency */,
+			);
+			name = JoltUITests;
+			productName = JoltUITests;
+			productReference = 5CF686EA1CA0AD1000000F4D /* JoltUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		5CF686F21CA0AD1000000F4D /* Jolt WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5CF687181CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt WatchKit App" */;
+			buildPhases = (
+				5CF686F11CA0AD1000000F4D /* Resources */,
+				5CF687171CA0AD1000000F4D /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5CF687051CA0AD1000000F4D /* PBXTargetDependency */,
+			);
+			name = "Jolt WatchKit App";
+			productName = "Jolt WatchKit App";
+			productReference = 5CF686F31CA0AD1000000F4D /* Jolt WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		5CF687011CA0AD1000000F4D /* Jolt WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5CF687141CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt WatchKit Extension" */;
+			buildPhases = (
+				5CF686FE1CA0AD1000000F4D /* Sources */,
+				5CF686FF1CA0AD1000000F4D /* Frameworks */,
+				5CF687001CA0AD1000000F4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Jolt WatchKit Extension";
+			productName = "Jolt WatchKit Extension";
+			productReference = 5CF687021CA0AD1000000F4D /* Jolt WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5CF686C31CA0AD0F00000F4D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = JoltApp;
+				TargetAttributes = {
+					5CF686CA1CA0AD1000000F4D = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					5CF686DE1CA0AD1000000F4D = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 5CF686CA1CA0AD1000000F4D;
+					};
+					5CF686E91CA0AD1000000F4D = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 5CF686CA1CA0AD1000000F4D;
+					};
+					5CF686F21CA0AD1000000F4D = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					5CF687011CA0AD1000000F4D = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 5CF686C61CA0AD0F00000F4D /* Build configuration list for PBXProject "Jolt" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5CF686C21CA0AD0F00000F4D;
+			productRefGroup = 5CF686CC1CA0AD1000000F4D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5CF686CA1CA0AD1000000F4D /* Jolt */,
+				5CF686DE1CA0AD1000000F4D /* JoltTests */,
+				5CF686E91CA0AD1000000F4D /* JoltUITests */,
+				5CF686F21CA0AD1000000F4D /* Jolt WatchKit App */,
+				5CF687011CA0AD1000000F4D /* Jolt WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5CF686C91CA0AD1000000F4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CF686D91CA0AD1000000F4D /* LaunchScreen.storyboard in Resources */,
+				5CF686D61CA0AD1000000F4D /* Assets.xcassets in Resources */,
+				5CF686D41CA0AD1000000F4D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686DD1CA0AD1000000F4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686E81CA0AD1000000F4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686F11CA0AD1000000F4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CF686FC1CA0AD1000000F4D /* Assets.xcassets in Resources */,
+				5CF686FA1CA0AD1000000F4D /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF687001CA0AD1000000F4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CF687101CA0AD1000000F4D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5CF686C71CA0AD1000000F4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CF686D11CA0AD1000000F4D /* ViewController.swift in Sources */,
+				5CF686CF1CA0AD1000000F4D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686DB1CA0AD1000000F4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CF686E41CA0AD1000000F4D /* JoltTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686E61CA0AD1000000F4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CF686EF1CA0AD1000000F4D /* JoltUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CF686FE1CA0AD1000000F4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CF6870E1CA0AD1000000F4D /* NotificationController.swift in Sources */,
+				5CF6870C1CA0AD1000000F4D /* ExtensionDelegate.swift in Sources */,
+				5CF6870A1CA0AD1000000F4D /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5CF686E11CA0AD1000000F4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5CF686CA1CA0AD1000000F4D /* Jolt */;
+			targetProxy = 5CF686E01CA0AD1000000F4D /* PBXContainerItemProxy */;
+		};
+		5CF686EC1CA0AD1000000F4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5CF686CA1CA0AD1000000F4D /* Jolt */;
+			targetProxy = 5CF686EB1CA0AD1000000F4D /* PBXContainerItemProxy */;
+		};
+		5CF686F61CA0AD1000000F4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5CF686F21CA0AD1000000F4D /* Jolt WatchKit App */;
+			targetProxy = 5CF686F51CA0AD1000000F4D /* PBXContainerItemProxy */;
+		};
+		5CF687051CA0AD1000000F4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5CF687011CA0AD1000000F4D /* Jolt WatchKit Extension */;
+			targetProxy = 5CF687041CA0AD1000000F4D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5CF686D21CA0AD1000000F4D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CF686D31CA0AD1000000F4D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5CF686D71CA0AD1000000F4D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CF686D81CA0AD1000000F4D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		5CF686F81CA0AD1000000F4D /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CF686F91CA0AD1000000F4D /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5CF687121CA0AD1000000F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5CF687131CA0AD1000000F4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5CF687151CA0AD1000000F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		5CF687161CA0AD1000000F4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		5CF687191CA0AD1000000F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = Jolt_WatchKit_Extension;
+				INFOPLIST_FILE = "Jolt WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		5CF6871A1CA0AD1000000F4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = Jolt_WatchKit_Extension;
+				INFOPLIST_FILE = "Jolt WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		5CF6871D1CA0AD1000000F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Jolt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5CF6871E1CA0AD1000000F4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Jolt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5CF687201CA0AD1000000F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = JoltTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.JoltTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jolt.app/Jolt";
+			};
+			name = Debug;
+		};
+		5CF687211CA0AD1000000F4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = JoltTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.JoltTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jolt.app/Jolt";
+			};
+			name = Release;
+		};
+		5CF687231CA0AD1000000F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = JoltUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.JoltUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Jolt;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		5CF687241CA0AD1000000F4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = JoltUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.JoltUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Jolt;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5CF686C61CA0AD0F00000F4D /* Build configuration list for PBXProject "Jolt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CF687121CA0AD1000000F4D /* Debug */,
+				5CF687131CA0AD1000000F4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5CF687141CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CF687151CA0AD1000000F4D /* Debug */,
+				5CF687161CA0AD1000000F4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5CF687181CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CF687191CA0AD1000000F4D /* Debug */,
+				5CF6871A1CA0AD1000000F4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5CF6871C1CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CF6871D1CA0AD1000000F4D /* Debug */,
+				5CF6871E1CA0AD1000000F4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5CF6871F1CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "JoltTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CF687201CA0AD1000000F4D /* Debug */,
+				5CF687211CA0AD1000000F4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5CF687221CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "JoltUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CF687231CA0AD1000000F4D /* Debug */,
+				5CF687241CA0AD1000000F4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5CF686C31CA0AD0F00000F4D /* Project object */;
+}
