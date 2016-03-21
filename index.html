@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Jolt by monney</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Jolt</h1>
+      <h2 class="project-tagline">An intelligent alarm system for students</h2>
+      <a href="https://github.com/monney/Jolt" class="btn">View on GitHub</a>
+      <a href="https://github.com/monney/Jolt/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/monney/Jolt/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h1>
+
+<p>Our iOS app Nap Time will use the Apple Watch’s heart rate monitor and accelerometer to determine if a student has inadvertently fallen asleep and then vibrate and/or play an alarm if they have.</p>
+
+<h1>
+<a id="requirements-and-target-audiences" class="anchor" href="#requirements-and-target-audiences" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements and Target Audiences</h1>
+
+<h2>
+<a id="target-audience" class="anchor" href="#target-audience" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Target Audience</h2>
+
+<p>The target audience will be college students who need to stay awake while studying or for an important event.</p>
+
+<h2>
+<a id="key-user-benefits" class="anchor" href="#key-user-benefits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Key User Benefits</h2>
+
+<p>The ability to...</p>
+
+<ul>
+<li><p>Wake up shortly after inadvertently falling asleep</p></li>
+<li><p>Schedule an interval of allowable sleep time</p></li>
+<li><p>Contact friends to wake you up in the case of important events</p></li>
+</ul>
+
+<h2>
+<a id="system-improvements" class="anchor" href="#system-improvements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System Improvements</h2>
+
+<p>The current systems are geared towards drivers who are falling asleep at the wheel. The primary flaw with this is that to be useful in this situation you need to detect sleep within milliseconds, which is infeasible by most methods. With non life-threatening situations the tolerance for error is much higher. Other iOS apps to track sleep are designed for all night usage and monitoring sleep quality, but with most smart watches having a single day’s battery life, you lose the critical function of charging while sleeping.</p>
+
+<h1>
+<a id="functionality" class="anchor" href="#functionality" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Functionality</h1>
+
+<h2>
+<a id="common-use-cases" class="anchor" href="#common-use-cases" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common Use Cases</h2>
+
+<ul>
+<li>
+<p><strong>Our student “Joe” has finals and hasn’t been able to get much sleep over the past week, but he really needs to study.</strong></p>
+
+<p>Joe activates the app and sets it to monitor his activity while he is studying. If he accidentally falls asleep while he is studying, the app will detect this and wake him up.</p>
+</li>
+<li>
+<p><strong>Joe needs to sleep and can’t study anymore, he doesn’t think he can fall asleep right now. But, if he does, he wants to sleep for thirty minutes</strong></p>
+
+<p>Joe sets the app to monitor his activity, once we detect that Joe has been sleeping for thirty minutes, we will wake him up.</p>
+</li>
+<li>
+<p><strong>Joe is in lecture but it’s at 8am and he stayed up late studying</strong></p>
+
+<p>Joe activates the app while he is in lecture and the watch will silently vibrate and wake Joe up if he falls asleep.</p>
+</li>
+<li>
+<p><strong>Joe is a heavy sleeper and he needs to be up for a midterm</strong></p>
+
+<p>Joe adds the time of his exam to our app, we will detect if he is sleeping before he needs to be at his exam and attempt to wake him up with an alarm if he is. If we are unable to, we will send a message to a designated friend informing them of this.</p>
+</li>
+</ul>
+
+<h1>
+<a id="design" class="anchor" href="#design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design</h1>
+
+<h2>
+<a id="front-end" class="anchor" href="#front-end" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Front-End</h2>
+
+<p>The front-end will be designed in Photoshop and built in Xcode with AutoLayout.</p>
+
+<h2>
+<a id="front-end-back-end-connection" class="anchor" href="#front-end-back-end-connection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Front-End Back-End Connection</h2>
+
+<p>The front-end will connect to the back-end through segue’s and notification centers.</p>
+
+<h2>
+<a id="back-end" class="anchor" href="#back-end" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Back-End</h2>
+
+<p>The back-end will be created in Swift and use WatchKit and HealthKit.</p>
+
+<h2>
+<a id="back-end-database-connection" class="anchor" href="#back-end-database-connection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Back-End Database Connection</h2>
+
+<p>The back-end will connect to the database through SQL calls and Cocoa library calls.</p>
+
+<h2>
+<a id="database" class="anchor" href="#database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Database</h2>
+
+<p>The database will be implemented using Core Data and SQLite. The backend will store data used to help with making accurate sleep predictions.</p>
+
+<h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>Testing will consist of unit testing using Xcode, functional testing by manually testing on the Apple Watch, and user testing by having potential users test the app.</p>
+
+<h2>
+<a id="miscellaneous" class="anchor" href="#miscellaneous" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Miscellaneous</h2>
+
+<p>The tools chosen are standard for iOS wearables development.</p>
+
+<h1>
+<a id="timeline" class="anchor" href="#timeline" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Timeline</h1>
+
+<ul>
+<li><p>March 21 - Finish Learning Swift/AutoLayout, WatchKit, HealthKit, and have the app framework setup. Project status website will be complete and live.</p></li>
+<li><p>March 28 - Review proposed UI/UX designs for the app and tweak as needed. Start the process of obtaining beta testing status with TestFlight.</p></li>
+<li><p>April 4 - Implement heart rate monitoring and work on accurately interpreting this as a sleep measurement. Implement UI for wakefulness monitoring.</p></li>
+<li><p>April 11 - Implement Accelerometer measurements and interpret these as a sleep measurement. Implement UI for nap interval timing.</p></li>
+<li><p>April 18 - Perform Battery Life testing to determine optimal sensor sample rates. Implement interface to schedule important events. Implement adding an emergency contact for important events. Present Alpha.</p></li>
+<li><p>April 25 - Perform Extensive Testing of the app by the dev team and user testing by potential users. Present Beta.</p></li>
+<li><p>May 2 - Tweak the UI and functionality based on bugs found and feedback from user testing. Present our app.</p></li>
+<li><p>May 10 - This week will be dedicated to correcting slippage from previous weeks and getting approval for launching on the app store.</p></li>
+</ul>
+
+<h1>
+<a id="risks-and-outcomes" class="anchor" href="#risks-and-outcomes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Risks and Outcomes</h1>
+
+<ul>
+<li><p>App store approval takes a while so it likely won’t be launched by the end of the semester. This is not too big of a risk as we will be able to launch before next school year.</p></li>
+<li><p>Not many people currently have smart watches so the scope for the app will be limited initially. This will be solved as the appeal of smart watches grows and Apple launches the second version of the Apple Watch this fall (3 million additional units on college campuses alone).</p></li>
+<li><p>User testing will be difficult as not many people on campus have extensive experience with Smart Watch interfaces. This risk will be minimized by rigorously following Apple’s human interaction guidelines for wearable devices.</p></li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/monney/Jolt">Jolt</a> is maintained by <a href="https://github.com/monney">monney</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
