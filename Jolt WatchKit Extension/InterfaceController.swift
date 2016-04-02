@@ -11,7 +11,20 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
-
+    
+    @IBOutlet var timeDialPicker: WKInterfacePicker!
+    
+    var selectedTime: Int!
+    
+    @IBAction func timeSelectAction() {
+        NSLog("Sequence Picker: \(selectedTime) selected.")
+        pushControllerWithName("timerRunningInterface", context: selectedTime)
+    }
+    
+    @IBAction func pickerSelectTimeAction(value: Int) {
+        selectedTime = value
+    }
+    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
@@ -21,6 +34,14 @@ class InterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        
+        let pickerItems: [WKPickerItem] = (0...10).map {
+            let pickerItem = WKPickerItem()
+            pickerItem.contentImage = WKImage(imageName: "first-\($0).png")
+            return pickerItem
+        }
+        timeDialPicker.setItems(pickerItems)
+        
     }
 
     override func didDeactivate() {

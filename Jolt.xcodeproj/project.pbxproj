@@ -22,6 +22,7 @@
 		5CF6870C1CA0AD1000000F4D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */; };
 		5CF6870E1CA0AD1000000F4D /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF6870D1CA0AD1000000F4D /* NotificationController.swift */; };
 		5CF687101CA0AD1000000F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF6870F1CA0AD1000000F4D /* Assets.xcassets */; };
+		85364F681CAF8FF30019D028 /* timerRunningInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85364F671CAF8FF30019D028 /* timerRunningInterface.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		5CF6870D1CA0AD1000000F4D /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		5CF6870F1CA0AD1000000F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CF687111CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85364F671CAF8FF30019D028 /* timerRunningInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timerRunningInterface.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 		5CF687061CA0AD1000000F4D /* Jolt WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				85364F671CAF8FF30019D028 /* timerRunningInterface.swift */,
 				5CF687091CA0AD1000000F4D /* InterfaceController.swift */,
 				5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */,
 				5CF6870D1CA0AD1000000F4D /* NotificationController.swift */,
@@ -443,6 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CF6870E1CA0AD1000000F4D /* NotificationController.swift in Sources */,
+				85364F681CAF8FF30019D028 /* timerRunningInterface.swift in Sources */,
 				5CF6870C1CA0AD1000000F4D /* ExtensionDelegate.swift in Sources */,
 				5CF6870A1CA0AD1000000F4D /* InterfaceController.swift in Sources */,
 			);
@@ -733,6 +737,7 @@
 				5CF687161CA0AD1000000F4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CF687181CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt WatchKit App" */ = {
 			isa = XCConfigurationList;
@@ -741,6 +746,7 @@
 				5CF6871A1CA0AD1000000F4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CF6871C1CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "Jolt" */ = {
 			isa = XCConfigurationList;
@@ -749,6 +755,7 @@
 				5CF6871E1CA0AD1000000F4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CF6871F1CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "JoltTests" */ = {
 			isa = XCConfigurationList;
@@ -757,6 +764,7 @@
 				5CF687211CA0AD1000000F4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5CF687221CA0AD1000000F4D /* Build configuration list for PBXNativeTarget "JoltUITests" */ = {
 			isa = XCConfigurationList;
@@ -765,6 +773,7 @@
 				5CF687241CA0AD1000000F4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
