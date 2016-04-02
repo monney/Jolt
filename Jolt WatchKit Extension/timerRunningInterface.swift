@@ -15,6 +15,8 @@ class timerRunningInterface: WKInterfaceController {
     @IBOutlet var timeElapsedGroup: WKInterfaceGroup!
     @IBOutlet var timeElapsedImage: WKInterfaceImage!
     
+    var timeLimit = 0
+    
     @IBAction func stopTimingButton() {
         popController()
     }
@@ -25,11 +27,17 @@ class timerRunningInterface: WKInterfaceController {
         let imageString = "first-\(context!).png"
         
         self.timeElapsedGroup.setBackgroundImageNamed(imageString)
+        timeLimit = Int(context! as! NSNumber)
     }
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        
+        // Animate the blue bar as time elapses.
+        timeElapsedImage.setImageNamed("second-")
+        timeElapsedImage.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: 5 * Double(timeLimit), repeatCount: 1)
+        
     }
 
     override func didDeactivate() {
