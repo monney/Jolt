@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import HealthKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let healthKitStore = HKHealthStore()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -42,5 +44,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    // Authorization from watch
+    
+    
+    func applicationShouldRequestHealthAuthorization(application: UIApplication) {
+        
+        self.healthKitStore.handleAuthorizationForExtensionWithCompletion { success, error in
+            
+        }
+    }
 }
 
