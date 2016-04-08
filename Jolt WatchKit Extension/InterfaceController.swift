@@ -80,6 +80,7 @@
 import Foundation
 import HealthKit
 import WatchKit
+import CoreMotion
 
 
 class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
@@ -91,8 +92,18 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     
     let healthStore = HKHealthStore()
     var heartRateArray: [UInt16] = []
-    var counter = 0
+    var heartCounter = 0
     let heartBufferSize = 180
+    
+    // variables for accelerometer
+    @IBOutlet weak var labelX: WKInterfaceLabel!
+    @IBOutlet weak var labelY: WKInterfaceLabel!
+    @IBOutlet weak var labelZ: WKInterfaceLabel!
+    var motionArray: [UInt16] = []
+    var motionCounter = 0
+    let motionBufferSize = 45000
+    let motionManager = CMMotionManager()
+    let pi = M_PI
     
     
     //State of the app - is the workout activated
@@ -106,10 +117,43 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
+        
+        motionManager.accelerometerUpdateInterval = 0.1
     }
     
     override func willActivate() {
         super.willActivate()
+        
+        // ACCELEROMETER CODE
+        if motionManager.accelerometerAvailable {
+            var x = 0.0
+            var y = 0.0
+            var z = 0.0
+            let handler:CMAccelerometerHandler = {(data: CMAccelerometerData?, error: NSError?) -> Void in
+                x = data!.acceleration.x
+                y = data!.acceleration.y
+                z = data!.acceleration.z
+                
+                self.labelX.setText(String(format: "%.2f", data!.acceleration.x))
+                self.labelY.setText(String(format: "%.2f", data!.acceleration.y))
+                self.labelZ.setText(String(format: "%.2f", data!.acceleration.z))
+            }
+            
+            // calculate angle
+            let angle = atan((z)/sqrt((x*x) + (y*y))) * 180/pi
+            
+            // circular buffer of motion data
+            self.motionArray[self.motionCounter % self.motionBufferSize] = UInt16(angle)
+            self.motionCounter = self.motionCounter + 1
+            
+            motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: handler)
+        }
+        else {
+            labelX.setText("not available")
+            labelY.setText("not available")
+            labelZ.setText("not available")
+        }
+        /*************************************/
         
         guard HKHealthStore.isHealthDataAvailable() == true else {
             label.setText("not available")
@@ -128,6 +172,13 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
             }
         }
     }
+    
+    // NEW FUNCTION
+    override func didDeactivate() {
+        super.didDeactivate()
+        motionManager.stopAccelerometerUpdates()
+    }
+    /*************************************/
     
     func displayNotAllowed() {
         label.setText("not allowed")
@@ -225,8 +276,8 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
             self.animateHeart()
             
             // circular buffer of heartrate data
-            self.heartRateArray[self.counter % self.heartBufferSize] = UInt16(value)
-            self.counter = self.counter + 1
+            self.heartRateArray[self.heartCounter % self.heartBufferSize] = UInt16(value)
+            self.heartCounter = self.heartCounter + 1
             
             
         }
