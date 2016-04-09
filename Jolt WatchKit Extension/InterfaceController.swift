@@ -1,87 +1,14 @@
-////
-////  InterfaceController.swift
-////  Jolt WatchKit Extension
-////
-////  Created by Manbir Gulati on 3/21/16.
-////  Copyright © 2016 JoltApp. All rights reserved.
-////
-//
-//import WatchKit
-//import HealthKit
-//import Foundation
-//
-//
-//class InterfaceController: WKInterfaceController {
-//    
-//    let healthKitStore: HKHealthStore = HKHealthStore()
-//    //let workoutSession: HKWorkoutSession = HKWorkoutSession(activityType: .Other, locationType: .Indoor)
-//    
-//
-//    override func awakeWithContext(context: AnyObject?) {
-//        super.awakeWithContext(context)
-//        
-//        // Configure interface objects here.
-//    }
-//
-//    override func willActivate() {
-//        // This method is called when watch view controller is about to be visible to user
-//        super.willActivate()
-//        
-//        let typesToShare = Set([
-//            HKObjectType.workoutType(),
-//        ])
-//        
-//        let typesToRead = Set([
-//            HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)!,
-//        ])
-//    
-//        self.healthKitStore.requestAuthorizationToShareTypes(typesToShare, readTypes: typesToRead) {(success, error) -> Void in
-//        
-//        // let session = HKWorkoutSession(activityType: .Running, locationType: .Indoor)
-//        // session.delegate = self
-//        // self.healthKitStore.startWorkoutSession(self.workoutSession)
-//        
-//        }
-//    }
-//    
-//    
-//    override func contextForSegueWithIdentifier(segueIdentifier: String) -> AnyObject? {
-//        let activityType: HKWorkoutActivityType
-//        
-//        activityType = .Other
-//        /*
-//        switch segueIdentifier {
-//        default:
-//            activityType = .Other
-//        }
-//        */
-//        
-//        return WorkoutSessionContext(healthKitStore: self.healthKitStore, activityType: activityType)
-//        //self.workoutSession = HKWorkoutSession(activityType: .Other)
-//        //self.workoutSession!.delegate = self;
-//    }
-//
-//    override func didDeactivate() {
-//        // This method is called when watch view controller is no longer visible
-//        super.didDeactivate()
-//    }
-//    
-//
-//}
-
-//
 //  InterfaceController.swift
-//  VimoHeartRate WatchKit App Extension
+//  Jolt WatchKit Extension
 //
-//  Created by Ethan Fan on 6/25/15.
-//  Copyright © 2015 Vimo Lab. All rights reserved.
-//
+//  Created by Manbir Gulati on 3/21/16.
+//  Edited by Aneesh and Sharon on 4/8/16
+//  Copyright © 2016 JoltApp. All rights reserved.
 
 import Foundation
 import HealthKit
 import WatchKit
 import CoreMotion
-
 
 class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     
