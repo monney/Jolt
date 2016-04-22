@@ -361,9 +361,11 @@
 					};
 					5CF686F21CA0AD1000000F4D = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = Q3X6PGYNNN;
 					};
 					5CF687011CA0AD1000000F4D = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = Q3X6PGYNNN;
 					};
 				};
 			};
@@ -611,10 +613,13 @@
 		5CF687151CA0AD1000000F4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -625,10 +630,13 @@
 		5CF687161CA0AD1000000F4D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -640,10 +648,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Jolt_WatchKit_Extension;
 				INFOPLIST_FILE = "Jolt WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -656,10 +665,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Jolt_WatchKit_Extension;
 				INFOPLIST_FILE = "Jolt WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -673,9 +683,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Jolt/Jolt.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Jolt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -685,9 +696,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Jolt/Jolt.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Jolt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
