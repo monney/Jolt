@@ -23,6 +23,7 @@
 		5CF6870E1CA0AD1000000F4D /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF6870D1CA0AD1000000F4D /* NotificationController.swift */; };
 		5CF687101CA0AD1000000F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF6870F1CA0AD1000000F4D /* Assets.xcassets */; };
 		85364F681CAF8FF30019D028 /* timerRunningInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85364F671CAF8FF30019D028 /* timerRunningInterface.swift */; };
+		85364F6A1CBC889B0019D028 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 85364F691CBC889B0019D028 /* alarm.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,8 @@
 		5CF6870F1CA0AD1000000F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CF687111CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85364F671CAF8FF30019D028 /* timerRunningInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timerRunningInterface.swift; sourceTree = "<group>"; };
+		85364F691CBC889B0019D028 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
+		85364F6B1CBC89D60019D028 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,7 @@
 		5CF686C21CA0AD0F00000F4D = {
 			isa = PBXGroup;
 			children = (
+				85364F6B1CBC89D60019D028 /* AVFoundation.framework */,
 				5CF686CD1CA0AD1000000F4D /* Jolt */,
 				5CF686E21CA0AD1000000F4D /* JoltTests */,
 				5CF686ED1CA0AD1000000F4D /* JoltUITests */,
@@ -213,6 +217,7 @@
 				5CF687091CA0AD1000000F4D /* InterfaceController.swift */,
 				5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */,
 				5CF6870D1CA0AD1000000F4D /* NotificationController.swift */,
+				85364F691CBC889B0019D028 /* alarm.mp3 */,
 				5CF6870F1CA0AD1000000F4D /* Assets.xcassets */,
 				5CF687111CA0AD1000000F4D /* Info.plist */,
 				5CF687071CA0AD1000000F4D /* Supporting Files */,
@@ -409,6 +414,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85364F6A1CBC889B0019D028 /* alarm.mp3 in Resources */,
 				5CF687101CA0AD1000000F4D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

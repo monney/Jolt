@@ -13,16 +13,21 @@ import Foundation
 class InterfaceController: WKInterfaceController {
     
     @IBOutlet var timeDialPicker: WKInterfacePicker!
+    @IBOutlet var timeSelectButton: WKInterfaceButton!
+    @IBOutlet var timeLabel: WKInterfaceLabel!
     
     var selectedTime: Int!
     
     @IBAction func timeSelectAction() {
         NSLog("Sequence Picker: \(selectedTime) selected.")
-        pushControllerWithName("timerRunningInterface", context: selectedTime)
+        if (selectedTime != nil) {
+            pushControllerWithName("timerRunningInterface", context: selectedTime)
+        }
     }
     
     @IBAction func pickerSelectTimeAction(value: Int) {
         selectedTime = value
+        timeLabel.setText("\(value) min")
     }
     
     override func awakeWithContext(context: AnyObject?) {

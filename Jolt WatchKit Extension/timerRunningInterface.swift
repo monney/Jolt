@@ -13,9 +13,14 @@ import Foundation
 class timerRunningInterface: WKInterfaceController {
 
     @IBOutlet var timeElapsedGroup: WKInterfaceGroup!
-    @IBOutlet var timeElapsedImage: WKInterfaceImage!
+    @IBOutlet var displayElapsedTimer: WKInterfaceTimer!
+    @IBOutlet var timePassedGroup: WKInterfaceGroup!
     
     var timeLimit = 0
+    
+    let secInMin = 5.0
+    
+    weak var timer:NSTimer?
     
     @IBAction func stopTimingButton() {
         popController()
@@ -24,8 +29,9 @@ class timerRunningInterface: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         // Configure interface objects here.
-        let imageString = "first-\(context!).png"
         
+        let imageString = "first-\(context!).png"
+
         self.timeElapsedGroup.setBackgroundImageNamed(imageString)
         timeLimit = Int(context! as! NSNumber)
     }
@@ -35,9 +41,18 @@ class timerRunningInterface: WKInterfaceController {
         super.willActivate()
         
         // Animate the blue bar as time elapses.
-        timeElapsedImage.setImageNamed("second-")
-        timeElapsedImage.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: 5 * Double(timeLimit), repeatCount: 1)
+        timePassedGroup.setBackgroundImageNamed("second-")
+        timePassedGroup.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: secInMin * Double(timeLimit), repeatCount: 1)
         
+        timer = NSTimer.scheduledTimerWithTimeInterval(Double(timeLimit) * secInMin, target: self, selector: Selector("onTimerFire:"), userInfo: nil, repeats: false)
+        let date:NSDate = NSDate(timeIntervalSinceNow: secInMin * Double (timeLimit))
+        displayElapsedTimer.setDate(date)
+        displayElapsedTimer.start()
+    }
+    
+    func onTimerFire(timer : NSTimer) {
+        displayElapsedTimer.stop()
+        popController()
     }
 
     override func didDeactivate() {
