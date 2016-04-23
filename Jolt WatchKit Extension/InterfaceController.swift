@@ -18,6 +18,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     @IBOutlet private weak var startStopButton : WKInterfaceButton!
     
     let healthStore = HKHealthStore()
+    let notificationCenter = NSNotificationCenter()
     var heartRateArray = [Double](count: 120, repeatedValue: 0.0)
     var heartRateSum = 0.0
     var heartRateSampleNo  = 12
@@ -102,6 +103,9 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
                 if (self.accSuccessCount == 18000) {
                     self.accAnomaly = false
                     self.accSuccessCount = 0
+                }
+                if (self.accAnomaly == true && self.hrAnomaly == true) {
+                    self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
                 }
             }
             
@@ -304,6 +308,10 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
             }
             else {
                 self.hrAnomaly = false
+            }
+            
+            if (self.accAnomaly == true && self.hrAnomaly == true) {
+                self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
             }
         }
     }
