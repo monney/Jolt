@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C9E8F8E1CCB4CD70070D94C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D51CA0AD1000000F4D /* Assets.xcassets */; };
+		5C9E8F8F1CCB4CDE0070D94C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D51CA0AD1000000F4D /* Assets.xcassets */; };
 		5CF686CF1CA0AD1000000F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */; };
 		5CF686D11CA0AD1000000F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686D01CA0AD1000000F4D /* ViewController.swift */; };
 		5CF686D41CA0AD1000000F4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D21CA0AD1000000F4D /* Main.storyboard */; };
@@ -423,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CF686FC1CA0AD1000000F4D /* Assets.xcassets in Resources */,
+				5C9E8F8F1CCB4CDE0070D94C /* Assets.xcassets in Resources */,
 				5CF686FA1CA0AD1000000F4D /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85364F6A1CBC889B0019D028 /* alarm.mp3 in Resources */,
+				5C9E8F8E1CCB4CD70070D94C /* Assets.xcassets in Resources */,
 				5CF687101CA0AD1000000F4D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,7 +621,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -632,7 +636,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -649,7 +653,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Jolt_WatchKit_Extension;
 				INFOPLIST_FILE = "Jolt WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -666,7 +670,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Jolt_WatchKit_Extension;
 				INFOPLIST_FILE = "Jolt WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.Jolt.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.joltapp.jolt.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;

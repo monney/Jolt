@@ -44,7 +44,7 @@ class timerRunningInterface: WKInterfaceController {
         timePassedGroup.setBackgroundImageNamed("progressnew")
         timePassedGroup.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: secInMin * Double(timeLimit), repeatCount: 1)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(Double(timeLimit) * secInMin, target: self, selector: Selector("onTimerFire:"), userInfo: nil, repeats: false)
+        timer = NSTimer.scheduledTimerWithTimeInterval(Double(timeLimit) * secInMin, target: self, selector: #selector(timerRunningInterface.onTimerFire(_:)), userInfo: nil, repeats: false)
         let date:NSDate = NSDate(timeIntervalSinceNow: secInMin * Double (timeLimit))
         displayElapsedTimer.setDate(date)
         displayElapsedTimer.start()
