@@ -19,15 +19,25 @@ class InterfaceController: WKInterfaceController {
     
     @IBAction func timeSelectAction() {
         NSLog("Sequence Picker: \(selectedTime) selected.")
-        if (selectedTime != nil) {
-            if (selectedTime != 0) {
-                pushControllerWithName("timerRunningInterface", context: selectedTime)
-            }
-        }
+        contextForSegueWithIdentifier("modalPush")
     }
+    
+    override func contextForSegueWithIdentifier(segueIdentifier: String) -> AnyObject? {
+        //presentControllerWithName("timerRunningInterface", context: selectedTime)
+        return selectedTime
+    }
+    
     
     @IBAction func pickerSelectTimeAction(value: Int) {
         selectedTime = value
+        if (selectedTime != nil) {
+            if (selectedTime != 0) {
+                timeSelectButton.setEnabled(true)
+            }
+        }
+        if (selectedTime == 0) {
+            timeSelectButton.setEnabled(false)
+        }
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -46,7 +56,7 @@ class InterfaceController: WKInterfaceController {
             return pickerItem
         }
         timeDialPicker.setItems(pickerItems)
-        
+        timeSelectButton.setEnabled(false)
     }
 
     override func didDeactivate() {

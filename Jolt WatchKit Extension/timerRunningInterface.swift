@@ -18,12 +18,12 @@ class timerRunningInterface: WKInterfaceController {
     
     var timeLimit = 0
     
-    let secInMin = 60.0
+    let secInMin = 5.0
     
     weak var timer:NSTimer?
     
     @IBAction func stopTimingButton() {
-        popController()
+        dismissController()
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -52,12 +52,17 @@ class timerRunningInterface: WKInterfaceController {
     
     func onTimerFire(timer : NSTimer) {
         displayElapsedTimer.stop()
-        popController()
+        WKInterfaceDevice.currentDevice().playHaptic(.Stop)
+        dismissController()
+    }
+    
+    override init () {
+        super.init ()
+        self.setTitle("")
     }
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
-        WKInterfaceDevice.currentDevice().playHaptic(.Stop)
         super.didDeactivate()
     }
 
