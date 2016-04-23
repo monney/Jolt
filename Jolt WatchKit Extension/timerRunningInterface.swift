@@ -18,7 +18,7 @@ class timerRunningInterface: WKInterfaceController {
     
     var timeLimit = 0
     
-    let secInMin = 5.0
+    let secInMin = 60.0
     
     weak var timer:NSTimer?
     
@@ -57,6 +57,7 @@ class timerRunningInterface: WKInterfaceController {
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
+        WKInterfaceDevice.currentDevice().playHaptic(.Stop)
         super.didDeactivate()
     }
 
