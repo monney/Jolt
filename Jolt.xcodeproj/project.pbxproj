@@ -17,7 +17,6 @@
 		5CF686E41CA0AD1000000F4D /* JoltTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686E31CA0AD1000000F4D /* JoltTests.swift */; };
 		5CF686EF1CA0AD1000000F4D /* JoltUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686EE1CA0AD1000000F4D /* JoltUITests.swift */; };
 		5CF686F41CA0AD1000000F4D /* Jolt WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5CF686F31CA0AD1000000F4D /* Jolt WatchKit App.app */; };
-		5CF686FA1CA0AD1000000F4D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686F81CA0AD1000000F4D /* Interface.storyboard */; };
 		5CF686FC1CA0AD1000000F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686FB1CA0AD1000000F4D /* Assets.xcassets */; };
 		5CF687031CA0AD1000000F4D /* Jolt WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5CF687021CA0AD1000000F4D /* Jolt WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5CF6870A1CA0AD1000000F4D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF687091CA0AD1000000F4D /* InterfaceController.swift */; };
@@ -26,6 +25,8 @@
 		5CF687101CA0AD1000000F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF6870F1CA0AD1000000F4D /* Assets.xcassets */; };
 		85364F681CAF8FF30019D028 /* timerRunningInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85364F671CAF8FF30019D028 /* timerRunningInterface.swift */; };
 		85364F6A1CBC889B0019D028 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 85364F691CBC889B0019D028 /* alarm.mp3 */; };
+		85E7A01F1CCB9F1B001EBF76 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85E7A01E1CCB9F1B001EBF76 /* HealthKit.framework */; };
+		85E7A0221CCBB3F8001EBF76 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85E7A0211CCBB3F8001EBF76 /* Interface.storyboard */; };
 		85FF6FFF1CCB44D90060440F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FF6FFE1CCB44D90060440F /* HealthKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,7 +101,6 @@
 		5CF686EE1CA0AD1000000F4D /* JoltUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoltUITests.swift; sourceTree = "<group>"; };
 		5CF686F01CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CF686F31CA0AD1000000F4D /* Jolt WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jolt WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CF686F91CA0AD1000000F4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		5CF686FB1CA0AD1000000F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CF686FD1CA0AD1000000F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CF687021CA0AD1000000F4D /* Jolt WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Jolt WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +113,9 @@
 		85364F671CAF8FF30019D028 /* timerRunningInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timerRunningInterface.swift; sourceTree = "<group>"; };
 		85364F691CBC889B0019D028 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		85364F6B1CBC89D60019D028 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		85E7A01E1CCB9F1B001EBF76 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.2.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		85E7A0201CCB9F1B001EBF76 /* Jolt WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Jolt WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		85E7A0211CCBB3F8001EBF76 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Interface.storyboard; path = ../../../.Trash/Interface.storyboard; sourceTree = "<group>"; };
 		85FF6FFE1CCB44D90060440F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		85FF70001CCB44D90060440F /* Jolt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Jolt.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -144,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85E7A01F1CCB9F1B001EBF76 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +157,7 @@
 		5CF686C21CA0AD0F00000F4D = {
 			isa = PBXGroup;
 			children = (
+				85E7A01E1CCB9F1B001EBF76 /* HealthKit.framework */,
 				85FF6FFE1CCB44D90060440F /* HealthKit.framework */,
 				85364F6B1CBC89D60019D028 /* AVFoundation.framework */,
 				5CF686CD1CA0AD1000000F4D /* Jolt */,
@@ -211,8 +216,8 @@
 		5CF686F71CA0AD1000000F4D /* Jolt WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
-				5CF686F81CA0AD1000000F4D /* Interface.storyboard */,
 				5CF686FB1CA0AD1000000F4D /* Assets.xcassets */,
+				85E7A0211CCBB3F8001EBF76 /* Interface.storyboard */,
 				5CF686FD1CA0AD1000000F4D /* Info.plist */,
 			);
 			path = "Jolt WatchKit App";
@@ -221,6 +226,7 @@
 		5CF687061CA0AD1000000F4D /* Jolt WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				85E7A0201CCB9F1B001EBF76 /* Jolt WatchKit Extension.entitlements */,
 				85364F671CAF8FF30019D028 /* timerRunningInterface.swift */,
 				5CF687091CA0AD1000000F4D /* InterfaceController.swift */,
 				5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */,
@@ -370,6 +376,11 @@
 					5CF687011CA0AD1000000F4D = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = Q3X6PGYNNN;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -425,8 +436,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CF686FC1CA0AD1000000F4D /* Assets.xcassets in Resources */,
+				85E7A0221CCBB3F8001EBF76 /* Interface.storyboard in Resources */,
 				5C9E8F8F1CCB4CDE0070D94C /* Assets.xcassets in Resources */,
-				5CF686FA1CA0AD1000000F4D /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,14 +532,6 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		5CF686F81CA0AD1000000F4D /* Interface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5CF686F91CA0AD1000000F4D /* Base */,
-			);
-			name = Interface.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -618,6 +621,7 @@
 		5CF687151CA0AD1000000F4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Jolt WatchKit Extension/Jolt WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -633,6 +637,7 @@
 		5CF687161CA0AD1000000F4D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Jolt WatchKit Extension/Jolt WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

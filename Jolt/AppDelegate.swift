@@ -15,10 +15,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        // Notification actions
+        let snoozeAction = UIMutableUserNotificationAction()
+        snoozeAction.identifier = "snoozeAction"
+        snoozeAction.title = "Snooze"
+        snoozeAction.activationMode = .Background
+        snoozeAction.destructive = false
+        snoozeAction.authenticationRequired = false
+        
+        // Notification category
+        let mainCategory = UIMutableUserNotificationCategory()
+        mainCategory.identifier = "mainCategory"
+        
+        let defaultActions = [snoozeAction]
+        let minimalActions = [snoozeAction]
+        
+        mainCategory.setActions(defaultActions, forContext: .Default)
+        mainCategory.setActions(minimalActions, forContext: .Minimal)
+        
+        // Configure notifications
+        let notificationSettings = UIUserNotificationSettings(
+            forTypes: [.Alert, .Badge , .Sound],
+            categories: nil)
+        
+        // Register notifications
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        
         return true
     }
+    
+    func application(application: UIApplication, handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: ([NSObject : AnyObject]?) -> Void) {
+        if let value: AnyObject = userInfo?["scheduleLocalNotification"] where value as! Bool {
+            let notification = UILocalNotification()
+            notification.category = userInfo?["category"] as? String
+            notification.alertTitle = (userInfo?["alertTitle"] as! String)
+            notification.alertBody = userInfo?["alertBody"] as? String
+            notification.fireDate = userInfo?["fireDate"] as? NSDate
+            if let badge: AnyObject = userInfo?["applicationIconBadgeNumber"] {
+                notification.applicationIconBadgeNumber = badge as! Int
+            }
+            notification.soundName = userInfo?["soundName"] as? String
+            
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
 
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

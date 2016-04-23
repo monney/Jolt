@@ -71,7 +71,22 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
     
     
     @IBAction func stopTimingButton() {
-        dismissController()
+        //dismissController()
+        NSLog("Started Tracking!")
+        // START
+        if (self.workoutActive) {
+            //finish the current workout
+            self.workoutActive = false
+            //self.startStopButton.setTitle("Start")
+            if let workout = self.workoutSession {
+                healthStore.endWorkoutSession(workout)
+            }
+        } else {
+            //start a new workout
+            self.workoutActive = true
+            //self.startStopButton.setTitle("Stop")
+            startWorkout()
+        }
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -85,7 +100,9 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
         
         //HK
         motionManager.accelerometerUpdateInterval = 0.02
+        
     }
+    
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
@@ -151,20 +168,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
             return
         }
         
-        // START
-        if (self.workoutActive) {
-            //finish the current workout
-            self.workoutActive = false
-            //self.startStopButton.setTitle("Start")
-            if let workout = self.workoutSession {
-                healthStore.endWorkoutSession(workout)
-            }
-        } else {
-            //start a new workout
-            self.workoutActive = true
-            //self.startStopButton.setTitle("Stop")
-            startWorkout()
-        }
     }
     
     func displayNotAllowed() {
@@ -205,7 +208,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
     }
     
     func startWorkout() {
-        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.Other, locationType: HKWorkoutSessionLocationType.Indoor)
+        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.CrossTraining, locationType: HKWorkoutSessionLocationType.Indoor)
         self.workoutSession?.delegate = self
         healthStore.startWorkoutSession(self.workoutSession!)
     }
@@ -214,22 +217,31 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
         // adding predicate will not work
         // let predicate = HKQuery.predicateForSamplesWithStartDate(workoutStartDate, endDate: nil, options: HKQueryOptions.None)
         
-        guard let quantityType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate) else { return nil }
+        print("boats and hoes")
+        guard let quantityType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate) else { print("uh oh")
+            return nil }
+        
+        print("boats and moes")
         
         let heartRateQuery = HKAnchoredObjectQuery(type: quantityType, predicate: nil, anchor: anchor, limit: Int(HKObjectQueryNoLimit)) { (query, sampleObjects, deletedObjects, newAnchor, error) -> Void in
-            guard let newAnchor = newAnchor else {return}
+            guard let newAnchor = newAnchor else {print("oops")
+            return}
             self.anchor = newAnchor
             self.updateHeartRate(sampleObjects)
         }
         
+        print("boats and loes")
+        
         heartRateQuery.updateHandler = {(query, samples, deleteObjects, newAnchor, error) -> Void in
             self.anchor = newAnchor!
             self.updateHeartRate(samples)
+            print("boats and coes")
         }
         return heartRateQuery
     }
     
     func updateHeartRate(samples: [HKSample]?) {
+        print("boats and joes")
         guard let heartRateSamples = samples as? [HKQuantitySample] else {return}
         
         dispatch_async(dispatch_get_main_queue()) {
@@ -240,7 +252,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
             //self.updateDeviceName(name)
             //self.animateHeart()
             
-            //print(value)
+            print(value)
             
             if (self.heartCounter < 120) {
                 // circular buffer of heartrate data
@@ -328,7 +340,8 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
             }
             
             if (self.accAnomaly == true && self.hrAnomaly == true) {
-                self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
+                //self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
+            self.presentControllerWithName("NotificationController", context: nil)
             }
         }
     }
@@ -343,7 +356,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
     
     override init () {
         super.init ()
-        self.setTitle("")
+        self.setTitle("Stop")
     }
 
     override func didDeactivate() {
