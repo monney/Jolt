@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="10032"/>
@@ -28,8 +28,18 @@
                                 </label>
                             </items>
                         </group>
-                        <button width="1" alignment="left" title="Start" id="MX0-N8-3gt"/>
+                        <button width="1" alignment="left" title="Start" id="MX0-N8-3gt">
+                            <connections>
+                                <action selector="startBtnTapped" destination="AgC-eL-Hgc" id="UGt-cj-oA9"/>
+                            </connections>
+                        </button>
                     </items>
+                    <connections>
+                        <outlet property="deviceLabel" destination="TFQ-SJ-drd" id="WYU-vL-iYE"/>
+                        <outlet property="heart" destination="eMO-cS-YJc" id="e8F-v0-Rha"/>
+                        <outlet property="label" destination="zD6-rp-hVj" id="szj-6X-Z10"/>
+                        <outlet property="startStopButton" destination="MX0-N8-3gt" id="6pv-rF-Utq"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="220" y="345"/>

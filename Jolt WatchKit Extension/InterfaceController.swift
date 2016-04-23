@@ -18,15 +18,12 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     @IBOutlet private weak var startStopButton : WKInterfaceButton!
     
     let healthStore = HKHealthStore()
-    var heartRateArray: [UInt16] = []
+    var heartRateArray = [Double](count: 180, repeatedValue: 0.0)
     var heartCounter = 0
     let heartBufferSize = 180
     
     // variables for accelerometer
-    @IBOutlet weak var labelX: WKInterfaceLabel!
-    @IBOutlet weak var labelY: WKInterfaceLabel!
-    @IBOutlet weak var labelZ: WKInterfaceLabel!
-    var motionArray: [UInt16] = []
+    var motionArray = [Double](count: 45000, repeatedValue: 0.0)
     var motionCounter = 0
     let motionBufferSize = 45000
     let motionManager = CMMotionManager()
@@ -56,47 +53,35 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
             var x = 0.0
             var y = 0.0
             var z = 0.0
+            
             let handler:CMAccelerometerHandler = {(data: CMAccelerometerData?, error: NSError?) -> Void in
                 x = data!.acceleration.x
                 y = data!.acceleration.y
                 z = data!.acceleration.z
                 
-                self.labelX.setText(String(format: "%.2f", data!.acceleration.x))
-                self.labelY.setText(String(format: "%.2f", data!.acceleration.y))
-                self.labelZ.setText(String(format: "%.2f", data!.acceleration.z))
+                // calculate angle
+                let angle = atan((z)/sqrt((x*x) + (y*y))) * 180.0/self.pi
+                
+                // circular buffer of motion data
+                self.motionArray[self.motionCounter % self.motionBufferSize] = angle
+                self.motionCounter = self.motionCounter + 1
+                
+               // print(x)
+               // print(y)
+               // print(z)
+               // print(angle)
             }
-            
-            // calculate angle
-            let angle = atan((z)/sqrt((x*x) + (y*y))) * 180/pi
-            
-            // circular buffer of motion data
-            self.motionArray[self.motionCounter % self.motionBufferSize] = UInt16(angle)
-            self.motionCounter = self.motionCounter + 1
             
             motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: handler)
         }
         else {
-            labelX.setText("not available")
-            labelY.setText("not available")
-            labelZ.setText("not available")
+
         }
         /*************************************/
         
         guard HKHealthStore.isHealthDataAvailable() == true else {
             label.setText("not available")
             return
-        }
-        
-        guard let quantityType = HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate) else {
-            displayNotAllowed()
-            return
-        }
-        
-        let dataTypes = Set(arrayLiteral: quantityType)
-        healthStore.requestAuthorizationToShareTypes(nil, readTypes: dataTypes) { (success, error) -> Void in
-            if success == false {
-                self.displayNotAllowed()
-            }
         }
     }
     
@@ -163,7 +148,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     }
     
     func startWorkout() {
-        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.CrossTraining, locationType: HKWorkoutSessionLocationType.Indoor)
+        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.Other, locationType: HKWorkoutSessionLocationType.Indoor)
         self.workoutSession?.delegate = self
         healthStore.startWorkoutSession(self.workoutSession!)
     }
@@ -195,15 +180,16 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
         dispatch_async(dispatch_get_main_queue()) {
             guard let sample = heartRateSamples.first else{return}
             let value = sample.quantity.doubleValueForUnit(self.heartRateUnit)
-            self.label.setText(String(UInt16(value)))
             
             // retrieve source from sample
             let name = sample.sourceRevision.source.name
             self.updateDeviceName(name)
             self.animateHeart()
             
+            print(value)
+            
             // circular buffer of heartrate data
-            self.heartRateArray[self.heartCounter % self.heartBufferSize] = UInt16(value)
+            self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
             self.heartCounter = self.heartCounter + 1
             
             
