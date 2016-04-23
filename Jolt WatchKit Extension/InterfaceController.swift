@@ -14,20 +14,20 @@ class InterfaceController: WKInterfaceController {
     
     @IBOutlet var timeDialPicker: WKInterfacePicker!
     @IBOutlet var timeSelectButton: WKInterfaceButton!
-    @IBOutlet var timeLabel: WKInterfaceLabel!
     
     var selectedTime: Int!
     
     @IBAction func timeSelectAction() {
         NSLog("Sequence Picker: \(selectedTime) selected.")
         if (selectedTime != nil) {
-            pushControllerWithName("timerRunningInterface", context: selectedTime)
+            if (selectedTime != 0) {
+                pushControllerWithName("timerRunningInterface", context: selectedTime)
+            }
         }
     }
     
     @IBAction func pickerSelectTimeAction(value: Int) {
         selectedTime = value
-        timeLabel.setText("\(value) min")
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -40,9 +40,9 @@ class InterfaceController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
-        let pickerItems: [WKPickerItem] = (0...10).map {
+        let pickerItems: [WKPickerItem] = (0...120).map {
             let pickerItem = WKPickerItem()
-            pickerItem.contentImage = WKImage(imageName: "first-\($0).png")
+            pickerItem.contentImage = WKImage(imageName: "single\($0).png")
             return pickerItem
         }
         timeDialPicker.setItems(pickerItems)

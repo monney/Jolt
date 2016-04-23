@@ -30,7 +30,7 @@ class timerRunningInterface: WKInterfaceController {
         super.awakeWithContext(context)
         // Configure interface objects here.
         
-        let imageString = "first-\(context!).png"
+        let imageString = "singlenotext\(context!).png"
 
         self.timeElapsedGroup.setBackgroundImageNamed(imageString)
         timeLimit = Int(context! as! NSNumber)
@@ -41,7 +41,7 @@ class timerRunningInterface: WKInterfaceController {
         super.willActivate()
         
         // Animate the blue bar as time elapses.
-        timePassedGroup.setBackgroundImageNamed("second-")
+        timePassedGroup.setBackgroundImageNamed("progressnew")
         timePassedGroup.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: secInMin * Double(timeLimit), repeatCount: 1)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(Double(timeLimit) * secInMin, target: self, selector: Selector("onTimerFire:"), userInfo: nil, repeats: false)

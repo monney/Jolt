@@ -15,8 +15,7 @@
                                 <action selector="pickerSelectTimeAction:" destination="AgC-eL-Hgc" id="eTl-Mt-RTR"/>
                             </connections>
                         </picker>
-                        <label alignment="center" text="0 min" textAlignment="center" id="ucA-Gt-mpw"/>
-                        <button width="1" alignment="left" title="Track" id="q2M-BI-aDV">
+                        <button width="1" alignment="left" title="Start Tracking" id="q2M-BI-aDV">
                             <connections>
                                 <action selector="timeSelectAction" destination="AgC-eL-Hgc" id="Eat-lx-kM6"/>
                             </connections>
@@ -24,7 +23,6 @@
                     </items>
                     <connections>
                         <outlet property="timeDialPicker" destination="yT5-G4-OSx" id="mza-cT-Pmt"/>
-                        <outlet property="timeLabel" destination="ucA-Gt-mpw" id="pRL-9Z-l91"/>
                         <outlet property="timeSelectButton" destination="q2M-BI-aDV" id="Hbd-NX-uae"/>
                     </connections>
                 </controller>
