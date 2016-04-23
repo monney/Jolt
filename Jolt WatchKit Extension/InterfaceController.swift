@@ -29,9 +29,9 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     let heartBufferSize = 120
     
     // variables for accelerometer
-    var motionArray = [Double](count: 45000, repeatedValue: 0.0)
+    var motionArray = [Double](count: 9000, repeatedValue: 0.0)
     var motionCounter = 0
-    let motionBufferSize = 45000
+    let motionBufferSize = 9000
     let motionManager = CMMotionManager()
     let pi = M_PI
     
@@ -41,9 +41,16 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     var tempSum = 0.0
     var hrMean = 0.0
     var hrVariance = 0.0
+    var hrtval = 0.0
+    var hrpval = 0.0
+    
+    var accSuccessCount = 0
+    var accPrev = -5.0
     
     var hrAnomaly = false
     var accAnomaly = false
+    
+    // create vars for constant time of 3 minutes for hr and acc
     
     
     //State of the app - is the workout activated
@@ -58,7 +65,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        motionManager.accelerometerUpdateInterval = 0.1
+        motionManager.accelerometerUpdateInterval = 0.02
     }
     
     override func willActivate() {
@@ -82,10 +89,20 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
                 self.motionArray[self.motionCounter % self.motionBufferSize] = angle
                 self.motionCounter = self.motionCounter + 1
                 
-               // print(x)
-               // print(y)
-               // print(z)
-               // print(angle)
+                // compare angle to previous
+                if (angle - self.accPrev < 5.0) {
+                self.accSuccessCount = self.accSuccessCount + 1
+                }
+                else {
+                    self.accSuccessCount = 0
+                }
+                if (self.accSuccessCount == 9000) {
+                    self.accAnomaly = true
+                }
+                if (self.accSuccessCount == 18000) {
+                    self.accAnomaly = false
+                    self.accSuccessCount = 0
+                }
             }
             
             motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: handler)
@@ -227,6 +244,29 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
                         self.heartRateDiffArray[i-1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i-1]
                     }
                 }
+                
+                // compute mean and variance of the 9 differences
+                self.tempSum = 0.0
+                self.tempSum = self.heartRateDiffArray.reduce(0,combine: +)
+                self.hrMean = (self.tempSum/9.0)
+                
+                for i in 0...9 {
+                    self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean)*(self.heartRateDiffArray[i] - self.hrMean)
+                }
+                self.hrVariance = (self.hrVariance/9.0)
+                
+                // plug in the intercept and the coeffs to derive t
+                self.hrtval = -22.562 + (12.687 * self.hrMean) + (11.953 * self.hrVariance)
+                
+                // compute predicted probability
+                self.hrpval = (1.0/(1.0 + exp(self.hrtval)))
+                
+                if (self.hrpval >= 0.50) {
+                    self.hrAnomaly = true
+                }
+                else {
+                    self.hrAnomaly = false
+                }
             }
             
             else {
@@ -248,6 +288,23 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate {
             self.tempSum = self.heartRateDiffArray.reduce(0,combine: +)
             self.hrMean = (self.tempSum/9.0)
             
+            for i in 0...9 {
+                self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean)*(self.heartRateDiffArray[i] - self.hrMean)
+            }
+            self.hrVariance = (self.hrVariance/9.0)
+            
+            // plug in the intercept and the coeffs to derive t
+            self.hrtval = -22.562 + (12.687 * self.hrMean) + (11.953 * self.hrVariance)
+            
+            // compute predicted probability
+            self.hrpval = (1.0/(1.0 + exp(self.hrtval)))
+            
+            if (self.hrpval >= 0.50) {
+                self.hrAnomaly = true
+            }
+            else {
+                self.hrAnomaly = false
+            }
         }
     }
     
