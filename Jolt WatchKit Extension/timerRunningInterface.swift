@@ -18,7 +18,7 @@ class timerRunningInterface: WKInterfaceController {
     
     var timeLimit = 0
     
-    let secInMin = 5.0
+    let secInMin = 60.0
     
     weak var timer:NSTimer?
     
