@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C9E8F8D1CCB45CD0070D94C /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C9E8F8C1CCB45CD0070D94C /* HealthKit.framework */; };
 		5CF686CF1CA0AD1000000F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */; };
 		5CF686D11CA0AD1000000F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686D01CA0AD1000000F4D /* ViewController.swift */; };
 		5CF686D41CA0AD1000000F4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D21CA0AD1000000F4D /* Main.storyboard */; };
@@ -85,6 +86,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5C9E8F8B1CCB45CD0070D94C /* Jolt WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Jolt WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		5C9E8F8C1CCB45CD0070D94C /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.2.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		5CF686CB1CA0AD1000000F4D /* Jolt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jolt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CF686D01CA0AD1000000F4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C9E8F8D1CCB45CD0070D94C /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +156,7 @@
 		5CF686C21CA0AD0F00000F4D = {
 			isa = PBXGroup;
 			children = (
+				5C9E8F8C1CCB45CD0070D94C /* HealthKit.framework */,
 				E29024DE1CB06834001EB9BE /* HealthKit.framework */,
 				5CF686CD1CA0AD1000000F4D /* Jolt */,
 				5CF686E21CA0AD1000000F4D /* JoltTests */,
@@ -220,6 +225,7 @@
 		5CF687061CA0AD1000000F4D /* Jolt WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				5C9E8F8B1CCB45CD0070D94C /* Jolt WatchKit Extension.entitlements */,
 				5CF687091CA0AD1000000F4D /* InterfaceController.swift */,
 				E29024E21CB0A12D001EB9BE /* WorkoutManager.swift */,
 				5CF6870B1CA0AD1000000F4D /* ExtensionDelegate.swift */,
@@ -366,6 +372,11 @@
 					5CF687011CA0AD1000000F4D = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = Q3X6PGYNNN;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -613,6 +624,7 @@
 		5CF687151CA0AD1000000F4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Jolt WatchKit Extension/Jolt WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
@@ -630,6 +642,7 @@
 		5CF687161CA0AD1000000F4D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Jolt WatchKit Extension/Jolt WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Jolt WatchKit Extension/Info.plist";
