@@ -8,6 +8,8 @@
 
 import WatchKit
 import Foundation
+import HealthKit
+import CoreMotion
 
 
 class InterfaceController: WKInterfaceController {
