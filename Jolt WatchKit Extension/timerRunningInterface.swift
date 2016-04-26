@@ -12,22 +12,22 @@ import HealthKit
 import CoreMotion
 
 
-class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
-
+class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
+    
     @IBOutlet var timeElapsedGroup: WKInterfaceGroup!
     @IBOutlet var displayElapsedTimer: WKInterfaceTimer!
     @IBOutlet var timePassedGroup: WKInterfaceGroup!
     
     var timeLimit = 0
     let secInMin = 60.0
-    weak var timer:NSTimer?
+    weak var timer: NSTimer?
     
     // HK
     let healthStore = HKHealthStore()
     let notificationCenter = NSNotificationCenter()
     var heartRateArray = [Double](count: 120, repeatedValue: 0.0)
     var heartRateSum = 0.0
-    var heartRateSampleNo  = 12
+    var heartRateSampleNo = 12
     var heartRateAvgNo = 10
     var heartRateAvgArray = [Double](count: 10, repeatedValue: 0.0)
     var heartRateDiffArray = [Double](count: 9, repeatedValue: 0.0)
@@ -64,16 +64,13 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
     var workoutActive = false
     
     // define the activity type and location
-    var workoutSession : HKWorkoutSession?
+    var workoutSession: HKWorkoutSession?
     let heartRateUnit = HKUnit(fromString: "count/min")
     var anchor = HKQueryAnchor(fromValue: Int(HKAnchoredObjectQueryNoAnchor))
     
     
-    
     @IBAction func stopTimingButton() {
-        //dismissController()
-        NSLog("Started Tracking!")
-        // START
+        print("Started Tracking Manually")
         if (self.workoutActive) {
             //finish the current workout
             self.workoutActive = false
@@ -87,6 +84,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
             //self.startStopButton.setTitle("Stop")
             startWorkout()
         }
+        
     }
     
     override func awakeWithContext(context: AnyObject?) {
@@ -94,16 +92,14 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
         // Configure interface objects here.
         
         let imageString = "singlenotext\(context!).png"
-
+        
         self.timeElapsedGroup.setBackgroundImageNamed(imageString)
         timeLimit = Int(context! as! NSNumber)
         
         //HK
         motionManager.accelerometerUpdateInterval = 0.02
-        
     }
     
-
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
@@ -113,7 +109,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
         timePassedGroup.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: secInMin * Double(timeLimit), repeatCount: 1)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(Double(timeLimit) * secInMin, target: self, selector: #selector(timerRunningInterface.onTimerFire(_:)), userInfo: nil, repeats: false)
-        let date:NSDate = NSDate(timeIntervalSinceNow: secInMin * Double (timeLimit))
+        let date: NSDate = NSDate(timeIntervalSinceNow: secInMin * Double(timeLimit))
         displayElapsedTimer.setDate(date)
         displayElapsedTimer.start()
         
@@ -125,13 +121,14 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
             var y = 0.0
             var z = 0.0
             
-            let handler:CMAccelerometerHandler = {(data: CMAccelerometerData?, error: NSError?) -> Void in
+            let handler: CMAccelerometerHandler = {
+                (data: CMAccelerometerData?, error: NSError?) -> Void in
                 x = data!.acceleration.x
                 y = data!.acceleration.y
                 z = data!.acceleration.z
                 
                 // calculate angle
-                let angle = atan((z)/sqrt((x*x) + (y*y))) * 180.0/self.pi
+                let angle = atan((z) / sqrt((x * x) + (y * y))) * 180.0 / self.pi
                 
                 // circular buffer of motion data
                 self.motionArray[self.motionCounter % self.motionBufferSize] = angle
@@ -140,8 +137,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
                 // compare angle to previous
                 if (angle - self.accPrev < 5.0) {
                     self.accSuccessCount = self.accSuccessCount + 1
-                }
-                else {
+                } else {
                     self.accSuccessCount = 0
                 }
                 if (self.accSuccessCount == 9000) {
@@ -157,8 +153,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
             }
             
             motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: handler)
-        }
-        else {
+        } else {
             _ = 0
         }
         /*************************************/
@@ -167,7 +162,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
             NSLog("HK data not available")
             return
         }
-        
     }
     
     func displayNotAllowed() {
@@ -190,7 +184,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
         NSLog("Workout error: \(error.userInfo)")
     }
     
-    func workoutDidStart(date : NSDate) {
+    func workoutDidStart(date: NSDate) {
         if let query = createHeartRateStreamingQuery(date) {
             healthStore.executeQuery(query)
         } else {
@@ -198,7 +192,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
         }
     }
     
-    func workoutDidEnd(date : NSDate) {
+    func workoutDidEnd(date: NSDate) {
         if let query = createHeartRateStreamingQuery(date) {
             healthStore.stopQuery(query)
             NSLog("---")
@@ -208,7 +202,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
     }
     
     func startWorkout() {
-        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.CrossTraining, locationType: HKWorkoutSessionLocationType.Indoor)
+        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.Other, locationType: HKWorkoutSessionLocationType.Indoor)
         self.workoutSession?.delegate = self
         healthStore.startWorkoutSession(self.workoutSession!)
     }
@@ -217,54 +211,71 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
         // adding predicate will not work
         // let predicate = HKQuery.predicateForSamplesWithStartDate(workoutStartDate, endDate: nil, options: HKQueryOptions.None)
         
-        print("boats and hoes")
-        guard let quantityType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate) else { print("uh oh")
-            return nil }
         
-        print("boats and moes")
         
-        let heartRateQuery = HKAnchoredObjectQuery(type: quantityType, predicate: nil, anchor: anchor, limit: Int(HKObjectQueryNoLimit)) { (query, sampleObjects, deletedObjects, newAnchor, error) -> Void in
-            guard let newAnchor = newAnchor else {print("oops")
-            return}
-            self.anchor = newAnchor
-            self.updateHeartRate(sampleObjects)
+        guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate) else {
+            fatalError("Unable to create a heart rate sample type")
         }
         
-        print("boats and loes")
         
-        heartRateQuery.updateHandler = {(query, samples, deleteObjects, newAnchor, error) -> Void in
+        
+        let query = HKAnchoredObjectQuery(type: sampleType,
+                                          predicate: nil,
+                                          anchor: self.anchor,
+                                          limit: Int(HKObjectQueryNoLimit)) {
+                                            [unowned self](query, newSamples, deletedSamples, newAnchor, error) -> Void in
+                                            
+                                            guard let samples = newSamples as? [HKQuantitySample] else {
+                                                
+                                                print("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
+                                                abort()
+                                            }
+                                            
+                                            
+                                            self.anchor = newAnchor!
+                                            
+                                            self.updateHeartRate(samples)
+                                            
+                                            print("Done!")
+        }
+        
+        query.updateHandler = {
+            (query, samples, deleteObjects, newAnchor, error) -> Void in
             self.anchor = newAnchor!
             self.updateHeartRate(samples)
-            print("boats and coes")
         }
-        return heartRateQuery
+        return query
     }
     
     func updateHeartRate(samples: [HKSample]?) {
-        print("boats and joes")
-        guard let heartRateSamples = samples as? [HKQuantitySample] else {return}
+        guard let heartRateSamples = samples as? [HKQuantitySample] else {
+            return
+        }
         
         dispatch_async(dispatch_get_main_queue()) {
-            guard let sample = heartRateSamples.first else{return}
-            let value = sample.quantity.doubleValueForUnit(self.heartRateUnit)
             
+            
+            guard let sample = heartRateSamples.first else{
+                return
+            }
+            let value = sample.quantity.doubleValueForUnit(self.heartRateUnit)
+            print(value)
             // retrieve source from sample
             //self.updateDeviceName(name)
             //self.animateHeart()
             
-            print(value)
+            //print(value)
             
             if (self.heartCounter < 120) {
                 // circular buffer of heartrate data
                 self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
                 self.heartCounter = self.heartCounter + 1
                 
-                if(self.index12 < 12) {
+                if (self.index12 < 12) {
                     self.tempSum = self.tempSum + value
                     self.index12 = self.index12 + 1
-                }
-                else {
-                    self.heartRateAvgArray[self.index10] = self.tempSum/Double(self.heartRateSampleNo)
+                } else {
+                    self.heartRateAvgArray[self.index10] = self.tempSum / Double(self.heartRateSampleNo)
                     self.tempSum = 0.0
                     self.index10 = self.index10 + 1
                     self.index12 = 0
@@ -272,97 +283,91 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate{
                 
                 if (self.index10 == 10) {
                     
-                    for i in 1...9 {
+                    for i in 1 ... 9 {
                         
-                        self.heartRateDiffArray[i-1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i-1]
+                        self.heartRateDiffArray[i - 1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i - 1]
                     }
                 }
                 
                 // compute mean and variance of the 9 differences
                 self.tempSum = 0.0
-                self.tempSum = self.heartRateDiffArray.reduce(0,combine: +)
-                self.hrMean = (self.tempSum/9.0)
+                self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
+                self.hrMean = (self.tempSum / 9.0)
                 
-                for i in 0...9 {
-                    self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean)*(self.heartRateDiffArray[i] - self.hrMean)
+                for i in 0 ... 9 {
+                    self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
                 }
-                self.hrVariance = (self.hrVariance/9.0)
+                self.hrVariance = (self.hrVariance / 9.0)
                 
                 // plug in the intercept and the coeffs to derive t
                 self.hrtval = -22.562 + (12.687 * self.hrMean) + (11.953 * self.hrVariance)
                 
                 // compute predicted probability
-                self.hrpval = (1.0/(1.0 + exp(self.hrtval)))
+                self.hrpval = (1.0 / (1.0 + exp(self.hrtval)))
                 
                 if (self.hrpval >= 0.50) {
                     self.hrAnomaly = true
-                }
-                else {
+                } else {
                     self.hrAnomaly = false
                 }
-            }
-                
-            else {
+            } else {
                 self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
                 
                 
-                for i in 1...10 {
-                    self.heartRateAvgArray[i] = 12*self.heartRateAvgArray[i] - self.heartRateArray[self.heartCounter-120+(12*(i-1))]+self.heartRateArray[self.heartCounter-120+12*i]
+                for i in 1 ... 10 {
+                    self.heartRateAvgArray[i] = 12 * self.heartRateAvgArray[i] - self.heartRateArray[self.heartCounter - 120 + (12 * (i - 1))] + self.heartRateArray[self.heartCounter - 120 + 12 * i]
                 }
                 
-                for i in 1...9 {
-                    self.heartRateDiffArray[i-1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i-1]
+                for i in 1 ... 9 {
+                    self.heartRateDiffArray[i - 1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i - 1]
                 }
             }
             self.heartCounter = self.heartCounter + 1
             
             // compute mean and variance of the 9 differences
             self.tempSum = 0.0
-            self.tempSum = self.heartRateDiffArray.reduce(0,combine: +)
-            self.hrMean = (self.tempSum/9.0)
+            self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
+            self.hrMean = (self.tempSum / 9.0)
             
-            for i in 0...9 {
-                self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean)*(self.heartRateDiffArray[i] - self.hrMean)
+            for i in 0 ... 9 {
+                self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
             }
-            self.hrVariance = (self.hrVariance/9.0)
+            self.hrVariance = (self.hrVariance / 9.0)
             
             // plug in the intercept and the coeffs to derive t
             self.hrtval = -22.562 + (12.687 * self.hrMean) + (11.953 * self.hrVariance)
             
             // compute predicted probability
-            self.hrpval = (1.0/(1.0 + exp(self.hrtval)))
+            self.hrpval = (1.0 / (1.0 + exp(self.hrtval)))
             
             if (self.hrpval >= 0.50) {
                 self.hrAnomaly = true
-            }
-            else {
+            } else {
                 self.hrAnomaly = false
             }
             
             if (self.accAnomaly == true && self.hrAnomaly == true) {
-                //self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
-            self.presentControllerWithName("NotificationController", context: nil)
+                self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
             }
         }
     }
     
     
-    
-    func onTimerFire(timer : NSTimer) {
+    func onTimerFire(timer: NSTimer) {
         displayElapsedTimer.stop()
         WKInterfaceDevice.currentDevice().playHaptic(.Stop)
         dismissController()
     }
     
-    override init () {
-        super.init ()
-        self.setTitle("Stop")
+    override init() {
+        super.init()
+        self.setTitle("")
     }
-
+    
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
         motionManager.stopAccelerometerUpdates()
     }
-
+    
 }
