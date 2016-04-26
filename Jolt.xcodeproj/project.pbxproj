@@ -10,6 +10,7 @@
 		5C9E8F8E1CCB4CD70070D94C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D51CA0AD1000000F4D /* Assets.xcassets */; };
 		5C9E8F8F1CCB4CDE0070D94C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D51CA0AD1000000F4D /* Assets.xcassets */; };
 		5CE97A721CCF0B50007BED70 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CE97A711CCF0B50007BED70 /* Interface.storyboard */; };
+		5CE97A741CCF1611007BED70 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE97A731CCF1611007BED70 /* HealthManager.swift */; };
 		5CF686CF1CA0AD1000000F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */; };
 		5CF686D11CA0AD1000000F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF686D01CA0AD1000000F4D /* ViewController.swift */; };
 		5CF686D41CA0AD1000000F4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF686D21CA0AD1000000F4D /* Main.storyboard */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		5CE97A711CCF0B50007BED70 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
+		5CE97A731CCF1611007BED70 /* HealthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
 		5CF686CB1CA0AD1000000F4D /* Jolt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jolt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF686CE1CA0AD1000000F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CF686D01CA0AD1000000F4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				5CF686D51CA0AD1000000F4D /* Assets.xcassets */,
 				5CF686D71CA0AD1000000F4D /* LaunchScreen.storyboard */,
 				5CF686DA1CA0AD1000000F4D /* Info.plist */,
+				5CE97A731CCF1611007BED70 /* HealthManager.swift */,
 			);
 			path = Jolt;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE97A741CCF1611007BED70 /* HealthManager.swift in Sources */,
 				5CF686D11CA0AD1000000F4D /* ViewController.swift in Sources */,
 				5CF686CF1CA0AD1000000F4D /* AppDelegate.swift in Sources */,
 			);
