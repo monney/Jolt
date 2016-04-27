@@ -10,7 +10,6 @@ import WatchKit
 import Foundation
 import HealthKit
 import CoreMotion
-//import XCPlayground
 
 
 class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
@@ -131,6 +130,11 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                 // calculate angle
                 let angle = atan((z) / sqrt((x * x) + (y * y))) * 180.0 / self.pi
                 
+                // CREATE THE TXT FILE BEFORE RUNNING CODE. THE FILE MUST EXIST
+                let pathForLog = "/Users/<YOURUSER>/accel.txt"
+                freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
+                print(String(angle))
+                
                 // circular buffer of motion data
                 self.motionArray[self.motionCounter % self.motionBufferSize] = angle
                 self.motionCounter = self.motionCounter + 1
@@ -176,7 +180,8 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
         case .Ended:
             workoutDidEnd(date)
         default:
-            print("Unexpected state \(toState)")
+            //print("Unexpected state \(toState)")
+            NSLog("Unexpected state \(toState)")
         }
     }
     
@@ -228,31 +233,20 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                             
                                             guard let samples = newSamples as? [HKQuantitySample] else {
                                                 
-                                                print("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
+                                                //print("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
+                                                NSLog("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
                                                 abort()
                                             }
-                                            NSLog("should log")
                                             
                                             
-                                            
-                                            //let pathForLog = XCPSharedDataDirectoryPath.stringByAppendingPathComponent("dump.txt")
-                                            
-                                            //let allPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-                                            //let documentsDirectory = allPaths.first!
-                                            //let pathForLog = documentsDirectory.stringByAppendingString("/dump.txt")
-                                        
-                                            let pathForLog = "/Users/<YOURUSER>/dump.txt"
-                                        
-                                            freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "w+", stdout)
-                                            
-                                            NSLog("should not log")
                                             
                                             
                                             self.anchor = newAnchor!
                                             
                                             self.updateHeartRate(samples)
-                                            
-                                            print("Done!")
+                                        
+                                            //print("Done!")
+                                            NSLog("Done!")
         }
         
         query.updateHandler = {
@@ -275,7 +269,18 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                 return
             }
             let value = sample.quantity.doubleValueForUnit(self.heartRateUnit)
+            
+            // original redirect code. if anyone can fix this that would be gr8
+            //let pathForLog = XCPSharedDataDirectoryPath.stringByAppendingPathComponent("dump.txt")
+            //let allPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+            //let documentsDirectory = allPaths.first!
+            //let pathForLog = documentsDirectory.stringByAppendingString("/dump.txt")
+            
+            // CREATE THE TXT FILE BEFORE RUNNING CODE. THE FILE MUST EXIST
+            let pathForLog = "/Users/<YOURUSER>/heartrate.txt"
+            freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
             print(value)
+            
             // retrieve source from sample
             //self.updateDeviceName(name)
             //self.animateHeart()
