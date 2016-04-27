@@ -10,6 +10,7 @@ import WatchKit
 import Foundation
 import HealthKit
 import CoreMotion
+//import XCPlayground
 
 
 class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
@@ -230,6 +231,21 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                                 print("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
                                                 abort()
                                             }
+                                            NSLog("should log")
+                                            
+                                            
+                                            
+                                            //let pathForLog = XCPSharedDataDirectoryPath.stringByAppendingPathComponent("dump.txt")
+                                            
+                                            //let allPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+                                            //let documentsDirectory = allPaths.first!
+                                            //let pathForLog = documentsDirectory.stringByAppendingString("/dump.txt")
+                                        
+                                            let pathForLog = "/Users/<YOURUSER>/dump.txt"
+                                        
+                                            freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "w+", stdout)
+                                            
+                                            NSLog("should not log")
                                             
                                             
                                             self.anchor = newAnchor!
