@@ -22,6 +22,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     @IBOutlet var timerStopButton: WKInterfaceButton!
     let secInMin = 60.0
     weak var timer: NSTimer?
+    var timerHasFired = false
     
     // HK
     let healthStore = HKHealthStore()
@@ -118,6 +119,11 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         NSLog("willActivate")
+        
+        if (timerHasFired) {
+            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+            dismissController()
+        }
         
         
         //HK
@@ -382,8 +388,9 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     func onTimerFire(timer: NSTimer) {
         NSLog("onTimerFire")
         displayElapsedTimer.stop()
-        WKInterfaceDevice.currentDevice().playHaptic(.Stop)
+        WKInterfaceDevice.currentDevice().playHaptic(.Notification)
         timerStopButton.setTitle("Start Tracking")
+        timerHasFired = true
         dismissController()
     }
     
