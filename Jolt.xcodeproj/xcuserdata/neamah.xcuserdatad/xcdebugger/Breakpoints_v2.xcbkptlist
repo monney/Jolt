@@ -10,11 +10,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jolt WatchKit Extension/timerRunningInterface.swift"
-            timestampString = "483113930.388551"
+            timestampString = "483514542.543507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
+            landmarkName = "createHeartRateStreamingQuery(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Jolt WatchKit Extension/timerRunningInterface.swift"
+            timestampString = "483509444.572662"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "stopTimingButton()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jolt WatchKit Extension/timerRunningInterface.swift"
-            timestampString = "483115016.297423"
+            timestampString = "483514542.543507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "createHeartRateStreamingQuery(_:)"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "awakeWithContext(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jolt WatchKit Extension/timerRunningInterface.swift"
-            timestampString = "483115135.371436"
+            timestampString = "483514542.543507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "willActivate()"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "workoutSession(_:didChangeToState:fromState:date:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jolt WatchKit Extension/timerRunningInterface.swift"
-            timestampString = "483116290.459998"
+            timestampString = "483514542.543507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
-            landmarkName = "createHeartRateStreamingQuery(_:)"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "startWorkout()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Jolt WatchKit Extension/timerRunningInterface.swift"
-            timestampString = "483116290.459998"
+            timestampString = "483514542.543507"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "createHeartRateStreamingQuery(_:)"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "updateHeartRate(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

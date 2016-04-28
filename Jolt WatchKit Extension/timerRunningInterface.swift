@@ -19,6 +19,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     @IBOutlet var timePassedGroup: WKInterfaceGroup!
     
     var timeLimit = 0
+    @IBOutlet var timerStopButton: WKInterfaceButton!
     let secInMin = 60.0
     weak var timer: NSTimer?
     
@@ -70,26 +71,39 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     
     
     @IBAction func stopTimingButton() {
-        print("Started Tracking Manually")
+        print("button pressed")
         if (self.workoutActive) {
             //finish the current workout
             self.workoutActive = false
             //self.startStopButton.setTitle("Start")
             if let workout = self.workoutSession {
                 healthStore.endWorkoutSession(workout)
+                //timerStopButton.setTitle("Start Tracking")
+                dismissController()
             }
         } else {
             //start a new workout
             self.workoutActive = true
-            //self.startStopButton.setTitle("Stop")
+            timerStopButton.setTitle("Stop Tracking")
             startWorkout()
+            
+            // Animate the blue bar as time elapses.
+            timePassedGroup.setBackgroundImageNamed("progressnew")
+            timePassedGroup.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: secInMin * Double(timeLimit), repeatCount: 1)
+            
+            timer = NSTimer.scheduledTimerWithTimeInterval(Double(timeLimit) * secInMin, target: self, selector: #selector(timerRunningInterface.onTimerFire(_:)), userInfo: nil, repeats: false)
+            let date: NSDate = NSDate(timeIntervalSinceNow: secInMin * Double(timeLimit))
+            displayElapsedTimer.setDate(date)
+            displayElapsedTimer.start()
         }
         
     }
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
+        NSLog("awakeWithContext")
         // Configure interface objects here.
+        self.setTitle("<")
         
         let imageString = "singlenotext\(context!).png"
         
@@ -103,15 +117,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        
-        // Animate the blue bar as time elapses.
-        timePassedGroup.setBackgroundImageNamed("progressnew")
-        timePassedGroup.startAnimatingWithImagesInRange(NSMakeRange(0, timeLimit + 1), duration: secInMin * Double(timeLimit), repeatCount: 1)
-        
-        timer = NSTimer.scheduledTimerWithTimeInterval(Double(timeLimit) * secInMin, target: self, selector: #selector(timerRunningInterface.onTimerFire(_:)), userInfo: nil, repeats: false)
-        let date: NSDate = NSDate(timeIntervalSinceNow: secInMin * Double(timeLimit))
-        displayElapsedTimer.setDate(date)
-        displayElapsedTimer.start()
+        NSLog("willActivate")
         
         
         //HK
@@ -131,8 +137,8 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                 let angle = atan((z) / sqrt((x * x) + (y * y))) * 180.0 / self.pi
                 
                 // CREATE THE TXT FILE BEFORE RUNNING CODE. THE FILE MUST EXIST
-                let pathForLog = "/Users/<YOURUSER>/accel.txt"
-                freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
+                //let pathForLog = "/Users/<YOURUSER>/accel.txt"
+                //freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
                 print(String(angle))
                 
                 // circular buffer of motion data
@@ -174,6 +180,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     }
     
     func workoutSession(workoutSession: HKWorkoutSession, didChangeToState toState: HKWorkoutSessionState, fromState: HKWorkoutSessionState, date: NSDate) {
+        NSLog("workoutSession1")
         switch toState {
         case .Running:
             workoutDidStart(date)
@@ -186,11 +193,13 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     }
     
     func workoutSession(workoutSession: HKWorkoutSession, didFailWithError error: NSError) {
+        NSLog("workoutSession2")
         // Do nothing for now
         NSLog("Workout error: \(error.userInfo)")
     }
     
     func workoutDidStart(date: NSDate) {
+        NSLog("workoutDidStart")
         if let query = createHeartRateStreamingQuery(date) {
             healthStore.executeQuery(query)
         } else {
@@ -199,6 +208,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     }
     
     func workoutDidEnd(date: NSDate) {
+        NSLog("workoutDidEnd")
         if let query = createHeartRateStreamingQuery(date) {
             healthStore.stopQuery(query)
             NSLog("---")
@@ -208,22 +218,20 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     }
     
     func startWorkout() {
+        NSLog("startWorkout")
         self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.Other, locationType: HKWorkoutSessionLocationType.Indoor)
         self.workoutSession?.delegate = self
         healthStore.startWorkoutSession(self.workoutSession!)
     }
     
     func createHeartRateStreamingQuery(workoutStartDate: NSDate) -> HKQuery? {
+        NSLog("createHeartRateStreamingQuery")
         // adding predicate will not work
         // let predicate = HKQuery.predicateForSamplesWithStartDate(workoutStartDate, endDate: nil, options: HKQueryOptions.None)
-        
-        
         
         guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate) else {
             fatalError("Unable to create a heart rate sample type")
         }
-        
-        
         
         let query = HKAnchoredObjectQuery(type: sampleType,
                                           predicate: nil,
@@ -237,9 +245,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                                 NSLog("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
                                                 abort()
                                             }
-                                            
-                                            
-                                            
                                             
                                             self.anchor = newAnchor!
                                             
@@ -258,6 +263,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     }
     
     func updateHeartRate(samples: [HKSample]?) {
+        NSLog("updateHeartRate")
         guard let heartRateSamples = samples as? [HKQuantitySample] else {
             return
         }
@@ -277,8 +283,8 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             //let pathForLog = documentsDirectory.stringByAppendingString("/dump.txt")
             
             // CREATE THE TXT FILE BEFORE RUNNING CODE. THE FILE MUST EXIST
-            let pathForLog = "/Users/<YOURUSER>/heartrate.txt"
-            freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
+            //let pathForLog = "/Users/<YOURUSER>/heartrate.txt"
+            //freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
             print(value)
             
             // retrieve source from sample
@@ -374,20 +380,27 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     
     
     func onTimerFire(timer: NSTimer) {
+        NSLog("onTimerFire")
         displayElapsedTimer.stop()
         WKInterfaceDevice.currentDevice().playHaptic(.Stop)
+        timerStopButton.setTitle("Start Tracking")
         dismissController()
-    }
-    
-    override init() {
-        super.init()
-        self.setTitle("")
     }
     
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+        NSLog("didDeactivate")
         motionManager.stopAccelerometerUpdates()
+        
+        if (self.workoutActive) {
+            //finish the current workout
+            self.workoutActive = false
+            //self.startStopButton.setTitle("Start")
+            if let workout = self.workoutSession {
+                healthStore.endWorkoutSession(workout)
+            }
+        }
     }
     
 }

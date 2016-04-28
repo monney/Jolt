@@ -35,9 +35,9 @@
             <objects>
                 <controller identifier="timerRunningInterface" id="Ykk-io-8js" customClass="timerRunningInterface" customModule="Jolt_WatchKit_Extension">
                     <items>
-                        <group width="100" height="100" alignment="center" backgroundImage="first-5" contentMode="scaleAspectFit" id="KgR-Aq-344">
+                        <group width="100" height="100" alignment="center" backgroundImage="singlenotext0" contentMode="scaleAspectFit" id="KgR-Aq-344">
                             <items>
-                                <group width="1" height="102" alignment="left" backgroundImage="second-1" id="FDY-d0-YVL">
+                                <group width="1" height="102" alignment="left" backgroundImage="progressnew0" id="FDY-d0-YVL">
                                     <items>
                                         <timer alignment="center" verticalAlignment="center" previewedSeconds="3597" id="TsE-vM-Q0K"/>
                                     </items>
@@ -54,6 +54,7 @@
                         <outlet property="displayElapsedTimer" destination="TsE-vM-Q0K" id="IoN-RF-uaz"/>
                         <outlet property="timeElapsedGroup" destination="KgR-Aq-344" id="gW1-o9-fuC"/>
                         <outlet property="timePassedGroup" destination="FDY-d0-YVL" id="h7M-Sj-blA"/>
+                        <outlet property="timerStopButton" destination="drn-xV-2je" id="BGk-Ty-8Gc"/>
                     </connections>
                 </controller>
             </objects>
