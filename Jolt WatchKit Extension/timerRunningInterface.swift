@@ -44,6 +44,13 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     let motionManager = CMMotionManager()
     let pi = M_PI
     
+    var motionDiffArray = [Double](count:8999, repeatedValue: 0.0)
+    var aSum = 0.0
+    var motionMean = 0.0
+    var motionVar = 0.0
+    var motiontval = 0.0
+    var motionpval = 0.0
+    
     // LOL MORE VARS
     var index10 = 0
     var index12 = 0
@@ -57,7 +64,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     var accPrev = -5.0
     
     var hrAnomaly = false
-    var accAnomaly = false
+    var motionAnomaly = false
     
     // create vars for constant time of 3 minutes for hr and acc
     
@@ -145,28 +152,80 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                 // CREATE THE TXT FILE BEFORE RUNNING CODE. THE FILE MUST EXIST
                 //let pathForLog = "/Users/<YOURUSER>/accel.txt"
                 //freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
-                print(String(angle))
+                //print(String(angle))
                 
                 // circular buffer of motion data
-                self.motionArray[self.motionCounter % self.motionBufferSize] = angle
-                self.motionCounter = self.motionCounter + 1
+//                self.motionArray[self.motionCounter % self.motionBufferSize] = angle
+//                self.motionCounter = self.motionCounter + 1
+//                
+//                // compare angle to previous
+//                if (angle - self.accPrev < 5.0) {
+//                    self.accSuccessCount = self.accSuccessCount + 1
+//                } else {
+//                    self.accSuccessCount = 0
+//                }
+//                if (self.accSuccessCount == 9000) {
+//                    self.accAnomaly = true
+//                }
+//                if (self.accSuccessCount == 18000) {
+//                    self.accAnomaly = false
+//                    self.accSuccessCount = 0
+//                }
+//                if (self.accAnomaly == true && self.hrAnomaly == true) {
+//                    self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
+//                }
                 
-                // compare angle to previous
-                if (angle - self.accPrev < 5.0) {
-                    self.accSuccessCount = self.accSuccessCount + 1
-                } else {
-                    self.accSuccessCount = 0
-                }
-                if (self.accSuccessCount == 9000) {
-                    self.accAnomaly = true
-                }
-                if (self.accSuccessCount == 18000) {
-                    self.accAnomaly = false
-                    self.accSuccessCount = 0
-                }
-                if (self.accAnomaly == true && self.hrAnomaly == true) {
-                    self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
-                }
+                /****************** ACCEL ALG ******************/
+                
+                                // ACCEL ALG
+                
+                                // first observation
+                                if (self.motionCounter == 0) {
+                                    self.motionArray[self.motionCounter % self.motionBufferSize] = Double(angle)
+                                    self.motionCounter = self.motionCounter + 1
+                                }
+                
+                                    // 2nd-9000th observations (3 minutes)
+                                else {
+                                    // circular buffer of accel data
+                                    self.motionArray[self.motionCounter % self.motionBufferSize] = Double(angle)
+                                    self.motionCounter = self.motionCounter + 1
+                
+                                    // store the difference
+                                    self.motionDiffArray[(self.motionCounter - 2) % 8999] = self.motionArray[(self.motionCounter - 1) % self.motionBufferSize] - self.motionArray[(self.motionCounter - 2) % self.motionBufferSize]
+                
+                                    if (self.motionCounter >= 9000 && self.motionCounter % 250 == 0) {
+                
+                                        // calculate mean and variance
+                                        self.aSum = self.motionDiffArray.reduce(0, combine: +)
+                                        self.motionMean = self.aSum/9000.0
+                                        self.motionVar = 0.0
+                
+                                        for i in 0 ... 8998 {
+                                            self.motionVar = self.motionVar + (self.motionDiffArray[i] - self.motionMean) * (self.motionDiffArray[i] - self.motionMean)
+                                        }
+                                        self.motionVar = (self.motionVar / 9000.0)
+                                        
+                                    }
+                                     //plug in the intercept and the coeffs to derive t
+                                                self.motiontval = 10.78 + (13.947 * self.motionMean) + (-48.131 * self.motionVar)
+                                    
+                                                // compute predicted probability
+                                                self.motionpval = (1.0 / (1.0 + exp(-1.0 * self.motiontval)))
+                                    
+                                                if (self.motionpval >= 0.50) {
+                                                    self.motionAnomaly = true
+                                                } else {
+                                                    self.motionAnomaly = false
+                                                }
+                                    print(self.motionpval)
+                                    
+                                    
+                                }
+                
+                /***********************************************/
+                
+                
             }
             
             motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: handler)
@@ -291,7 +350,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             // CREATE THE TXT FILE BEFORE RUNNING CODE. THE FILE MUST EXIST
             //let pathForLog = "/Users/<YOURUSER>/heartrate.txt"
             //freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
-            print(value)
+            //print(value)
             
             // retrieve source from sample
             //self.updateDeviceName(name)
