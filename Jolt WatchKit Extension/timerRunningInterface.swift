@@ -52,13 +52,14 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     var motionpval = 0.0
     
     // LOL MORE VARS
-    var index10 = 0
-    var index12 = 0
+    var index10 = 0 // index into average array. Never exceeds 9
+    var index12 = 0 // when this hits 12, compute average
     var tempSum = 0.0
     var hrMean = 0.0
     var hrVariance = 0.0
     var hrtval = 0.0
     var hrpval = 0.0
+    var backuphrval = 0.0 // save this away before overwriting a val in circ buffer
     
     var accSuccessCount = 0
     var accPrev = -5.0
@@ -155,73 +156,76 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                 //print(String(angle))
                 
                 // circular buffer of motion data
-//                self.motionArray[self.motionCounter % self.motionBufferSize] = angle
-//                self.motionCounter = self.motionCounter + 1
-//                
-//                // compare angle to previous
-//                if (angle - self.accPrev < 5.0) {
-//                    self.accSuccessCount = self.accSuccessCount + 1
-//                } else {
-//                    self.accSuccessCount = 0
-//                }
-//                if (self.accSuccessCount == 9000) {
-//                    self.accAnomaly = true
-//                }
-//                if (self.accSuccessCount == 18000) {
-//                    self.accAnomaly = false
-//                    self.accSuccessCount = 0
-//                }
-//                if (self.accAnomaly == true && self.hrAnomaly == true) {
-//                    self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
-//                }
+                //                self.motionArray[self.motionCounter % self.motionBufferSize] = angle
+                //                self.motionCounter = self.motionCounter + 1
+                //
+                //                // compare angle to previous
+                //                if (angle - self.accPrev < 5.0) {
+                //                    self.accSuccessCount = self.accSuccessCount + 1
+                //                } else {
+                //                    self.accSuccessCount = 0
+                //                }
+                //                if (self.accSuccessCount == 9000) {
+                //                    self.accAnomaly = true
+                //                }
+                //                if (self.accSuccessCount == 18000) {
+                //                    self.accAnomaly = false
+                //                    self.accSuccessCount = 0
+                //                }
+                //                if (self.accAnomaly == true && self.hrAnomaly == true) {
+                //                    self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
+                //                }
                 
                 /****************** ACCEL ALG ******************/
                 
-                                // ACCEL ALG
+                // ACCEL ALG
                 
-                                // first observation
-                                if (self.motionCounter == 0) {
-                                    self.motionArray[self.motionCounter % self.motionBufferSize] = Double(angle)
-                                    self.motionCounter = self.motionCounter + 1
-                                }
+                // first observation
+                if (self.motionCounter == 0) {
+                    self.motionArray[self.motionCounter % self.motionBufferSize] = Double(angle)
+                    self.motionCounter = self.motionCounter + 1
+                }
+                    
+                    // 2nd-9000th observations (3 minutes)
+                else {
+                    // circular buffer of accel data
+                    self.motionArray[self.motionCounter % self.motionBufferSize] = Double(angle)
+                    self.motionCounter = self.motionCounter + 1
+                    
+                    // store the difference
+                    self.motionDiffArray[(self.motionCounter - 2) % 8999] = self.motionArray[(self.motionCounter - 1) % self.motionBufferSize] - self.motionArray[(self.motionCounter - 2) % self.motionBufferSize]
+                    
+                    if (self.motionCounter >= 9000 && self.motionCounter % 250 == 0) {
+                        
+                        // calculate mean and variance
+                        self.aSum = self.motionDiffArray.reduce(0, combine: +)
+                        self.motionMean = self.aSum/9000.0
+                        self.motionVar = 0.0
+                        
+                        for i in 0 ... 8998 {
+                            self.motionVar = self.motionVar + (self.motionDiffArray[i] - self.motionMean) * (self.motionDiffArray[i] - self.motionMean)
+                        }
+                        self.motionVar = (self.motionVar / 9000.0)
+                    }
+                    
+                }
                 
-                                    // 2nd-9000th observations (3 minutes)
-                                else {
-                                    // circular buffer of accel data
-                                    self.motionArray[self.motionCounter % self.motionBufferSize] = Double(angle)
-                                    self.motionCounter = self.motionCounter + 1
-                
-                                    // store the difference
-                                    self.motionDiffArray[(self.motionCounter - 2) % 8999] = self.motionArray[(self.motionCounter - 1) % self.motionBufferSize] - self.motionArray[(self.motionCounter - 2) % self.motionBufferSize]
-                
-                                    if (self.motionCounter >= 9000 && self.motionCounter % 250 == 0) {
-                
-                                        // calculate mean and variance
-                                        self.aSum = self.motionDiffArray.reduce(0, combine: +)
-                                        self.motionMean = self.aSum/9000.0
-                                        self.motionVar = 0.0
-                
-                                        for i in 0 ... 8998 {
-                                            self.motionVar = self.motionVar + (self.motionDiffArray[i] - self.motionMean) * (self.motionDiffArray[i] - self.motionMean)
-                                        }
-                                        self.motionVar = (self.motionVar / 9000.0)
-                                        
-                                    }
-                                     //plug in the intercept and the coeffs to derive t
-                                                self.motiontval = 10.78 + (13.947 * self.motionMean) + (-48.131 * self.motionVar)
-                                    
-                                                // compute predicted probability
-                                                self.motionpval = (1.0 / (1.0 + exp(-1.0 * self.motiontval)))
-                                    
-                                                if (self.motionpval >= 0.50) {
-                                                    self.motionAnomaly = true
-                                                } else {
-                                                    self.motionAnomaly = false
-                                                }
-                                    print(self.motionpval)
-                                    
-                                    
-                                }
+                if (self.motionCounter > 9000) {
+                    //plug in the intercept and the coeffs to derive t
+                    self.motiontval = 10.78 + (13.947 * self.motionMean) + (-48.131 * self.motionVar)
+                    
+                    // compute predicted probability
+                    self.motionpval = (1.0 / (1.0 + exp(-1.0 * self.motiontval)))
+                    
+                    if (self.motionpval >= 0.50) {
+                        self.motionAnomaly = true
+                    } else {
+                        self.motionAnomaly = false
+                    }
+                    print("Motion probability " + String(self.motionpval))
+                    
+                }
+
                 
                 /***********************************************/
                 
@@ -284,7 +288,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     
     func startWorkout() {
         NSLog("startWorkout")
-        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.Other, locationType: HKWorkoutSessionLocationType.Indoor)
+        self.workoutSession = HKWorkoutSession(activityType: HKWorkoutActivityType.CrossTraining, locationType: HKWorkoutSessionLocationType.Indoor)
         self.workoutSession?.delegate = self
         healthStore.startWorkoutSession(self.workoutSession!)
     }
@@ -314,7 +318,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                             self.anchor = newAnchor!
                                             
                                             self.updateHeartRate(samples)
-                                        
+                                            
                                             //print("Done!")
                                             NSLog("Done!")
         }
@@ -357,89 +361,161 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             //self.animateHeart()
             
             
-//            if (self.heartCounter < 120) {
-//                // circular buffer of heartrate data
-//                self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
-//                self.heartCounter = self.heartCounter + 1
-//                
-//                if (self.index12 < 12) {
-//                    self.tempSum = self.tempSum + value
-//                    self.index12 = self.index12 + 1
-//                } else {
-//                    self.heartRateAvgArray[self.index10] = self.tempSum / Double(self.heartRateSampleNo)
-//                    self.tempSum = 0.0
-//                    self.index10 = self.index10 + 1
-//                    self.index12 = 0
-//                }
-//                
-//                if (self.index10 == 10) {
-//                    
-//                    for i in 1 ... 9 {
-//                        
-//                        self.heartRateDiffArray[i - 1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i - 1]
-//                    }
-//                }
-//                
-//                // compute mean and variance of the 9 differences
-//                self.tempSum = 0.0
-//                self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
-//                self.hrMean = (self.tempSum / 9.0)
-//                
-//                for i in 0 ... 9 {
-//                    self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
-//                }
-//                self.hrVariance = (self.hrVariance / 9.0)
-//                
-//                // plug in the intercept and the coeffs to derive t
-//                self.hrtval = -22.562 + (12.687 * self.hrMean) + (11.953 * self.hrVariance)
-//                
-//                // compute predicted probability
-//                self.hrpval = (1.0 / (1.0 + exp(self.hrtval)))
-//                
-//                if (self.hrpval >= 0.50) {
-//                    self.hrAnomaly = true
-//                } else {
-//                    self.hrAnomaly = false
-//                }
-//            } else {
-//                self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
-//                
-//                
-//                for i in 1 ... 10 {
-//                    self.heartRateAvgArray[i] = 12 * self.heartRateAvgArray[i] - self.heartRateArray[self.heartCounter - 120 + (12 * (i - 1))] + self.heartRateArray[self.heartCounter - 120 + 12 * i]
-//                }
-//                
-//                for i in 1 ... 9 {
-//                    self.heartRateDiffArray[i - 1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i - 1]
-//                }
-//            }
-//            self.heartCounter = self.heartCounter + 1
-//            
-//            // compute mean and variance of the 9 differences
-//            self.tempSum = 0.0
-//            self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
-//            self.hrMean = (self.tempSum / 9.0)
-//            
-//            for i in 0 ... 9 {
-//                self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
-//            }
-//            self.hrVariance = (self.hrVariance / 9.0)
-//            
-//            // plug in the intercept and the coeffs to derive t
-//            self.hrtval = -22.562 + (12.687 * self.hrMean) + (11.953 * self.hrVariance)
-//            
-//            // compute predicted probability
-//            self.hrpval = (1.0 / (1.0 + exp(self.hrtval)))
-//            
-//            if (self.hrpval >= 0.50) {
-//                self.hrAnomaly = true
-//            } else {
-//                self.hrAnomaly = false
-//            }
-//            
-//            if (self.accAnomaly == true && self.hrAnomaly == true) {
-//                self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
-//            }
+            // HEARTRATE ALG (NEEDS TESTING)
+            //            if (self.heartCounter < 120) {
+            //                // circular buffer of heartrate data
+            //                self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
+            //                self.heartCounter = self.heartCounter + 1
+            //
+            //                if (self.index12 < 12) {
+            //                    self.tempSum = self.tempSum + value
+            //                    self.index12 = self.index12 + 1
+            //                } else {
+            //                    self.heartRateAvgArray[self.index10] = self.tempSum / Double(self.heartRateSampleNo)
+            //                    self.tempSum = 0.0
+            //                    self.index10 = self.index10 + 1
+            //                    self.index12 = 0
+            //                }
+            //
+            //                if (self.index10 == 10) {
+            //                    // reset index10
+            //                    self.index10 = 0
+            //
+            //                    for i in 1 ... 9 {
+            //                        self.heartRateDiffArray[i - 1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i - 1]
+            //                    }
+            //                }
+            //
+            //                // compute mean and variance of the 9 differences
+            //                self.tempSum = 0.0
+            //                self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
+            //                self.hrMean = (self.tempSum / 9.0)
+            //
+            //                for i in 0 ... 8 {
+            //                    self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
+            //                }
+            //                self.hrVariance = (self.hrVariance / 9.0)
+            //
+            //                // plug in the intercept and the coeffs to derive t
+            //                self.hrtval = -35.432 + (-186.129 * self.hrMean) + (-645.955 * self.hrVariance)
+            //
+            //                // compute predicted probability
+            //                self.hrpval = (1.0 / (1.0 + exp(-1.0 * self.hrtval)))
+            //
+            //                if (self.hrpval >= 0.50) {
+            //                    self.hrAnomaly = true
+            //                } else {
+            //                    self.hrAnomaly = false
+            //                }
+            //            }
+            //            else {
+            //                // update with each successive sample after 120
+            //
+            //                // store val before overwriting in circ buffer
+            //                self.backuphrval = self.heartRateArray[self.heartCounter % self.heartBufferSize]
+            //
+            //                // this overwrites one value in the circ buffer
+            //                self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
+            //
+            //                // update the averages
+            //                for i in 0 ... 9 {
+            //                    // this average uses the sentinel value
+            //                    if (i == ((self.heartCounter % self.heartBufferSize) / self.heartRateSampleNo)) {
+            //
+            //                        // CHECK IF THIS IS RIGHT.
+            //                        self.heartRateAvgArray[i] = (((self.heartRateAvgArray[i] * 12)
+            //                            - self.backuphrval)
+            //                            + self.heartRateArray[((self.heartCounter % self.heartBufferSize) + 12 * (i + 1)) % self.heartBufferSize]) /
+            //                            Double(self.heartRateSampleNo)
+            //                    }
+            //                    else {
+            //                        // these averages do not use the sentinel value
+            //                        // CHECK IF THIS IS RIGHT.
+            //                        self.heartRateAvgArray[i] = (((self.heartRateAvgArray[i] * 12) -
+            //                            self.heartRateArray[((self.heartCounter % self.heartBufferSize) + 12 * i) % self.heartBufferSize])
+            //                            + self.heartRateArray[((self.heartCounter % self.heartBufferSize) + 12 * (i+1)) % self.heartBufferSize]) / Double(self.heartRateSampleNo)
+            //                    }
+            //                }
+            //
+            //                for i in 1 ... 9 {
+            //                    self.heartRateDiffArray[i - 1] = self.heartRateAvgArray[i] - self.heartRateAvgArray[i - 1]
+            //                }
+            
+            
+            // compute mean and variance of the 9 differences
+            
+            // JUST FOR TESTING
+            //                self.heartRateDiffArray = [-0.33, -0.36, -0.45, -0.31, -0.37, -0.48, -0.32, -0.4, -0.42]
+            //
+            //                self.tempSum = 0.0
+            //                self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
+            //                self.hrMean = (self.tempSum / 9.0)
+            //
+            //                for i in 0 ... 8 {
+            //                    self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
+            //                }
+            //                self.hrVariance = (self.hrVariance / 9.0)
+            //
+            //                // plug in the intercept and the coeffs to derive t
+            //                self.hrtval = -35.432 + (-186.129 * self.hrMean) + (-645.955 * self.hrVariance)
+            //
+            //                // compute predicted probability
+            //                self.hrpval = (1.0 / (1.0 + exp(-1.0 * self.hrtval)))
+            //
+            //                if (self.hrpval >= 0.50) {
+            //                    self.hrAnomaly = true
+            //                } else {
+            //                    self.hrAnomaly = false
+            //                }
+            //
+            //                print("Heartrate probability " + String(self.hrpval))
+            //            }
+            
+            // p = 0.999999999
+            // self.heartRateDiffArray = [-0.33, -0.36, -0.45, -0.31, -0.37, -0.48, -0.32, -0.4, -0.42]
+            
+            // p = 0.999999999999942
+            //self.heartRateDiffArray = [-0.33, -0.25, -0.45, -0.53, -0.45, -0.48, -0.22, -0.4, -0.42]
+            
+            // p = 0.9901743463055
+            //self.heartRateDiffArray = [-0.33, 0.15, -0.45, -0.53, -0.45, -0.48, -0.22, -0.4, -0.42]
+            
+            // p = 4.88886044931938e-12
+            //self.heartRateDiffArray = [-0.33, 0.15, -0.45, -0.53, -0.45, -0.4, -0.22, 0.2, -0.42]
+            
+            // p = 1.39305724654427e-30
+            //self.heartRateDiffArray = [-0.33, 0.15, -0.45, -0.53, -0.45, 0.4, -0.22, 0.2, -0.42]
+            
+            //        self.tempSum = 0.0
+            //        self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
+            //        self.hrMean = (self.tempSum / 9.0)
+            //
+            //        for i in 0 ... 8 {
+            //            self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
+            //        }
+            //        self.hrVariance = (self.hrVariance / 9.0)
+            //
+            //        // plug in the intercept and the coeffs to derive t
+            //        self.hrtval = -35.432 + (-186.129 * self.hrMean) + (-645.955 * self.hrVariance)
+            //
+            //        // compute predicted probability
+            //        self.hrpval = (1.0 / (1.0 + exp(-1.0 * self.hrtval)))
+            //        
+            //        if (self.hrpval >= 0.50) {
+            //            self.hrAnomaly = true
+            //        } else {
+            //            self.hrAnomaly = false
+            //        }
+            //        
+            //        print("Heartrate probability " + String(self.hrpval))
+            //            self.heartCounter += 1
+            
+            
+            // POST NOTIFICATION IF BOTH ANOMALIES ARE TRUE
+            //if (self.accAnomaly == true && self.hrAnomaly == true) {
+            //   self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
+            //}
+            
         }
     }
     
