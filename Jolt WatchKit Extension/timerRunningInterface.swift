@@ -50,6 +50,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     var motionVar = 0.0
     var motiontval = 0.0
     var motionpval = 0.0
+    var count = 0
     
     // conjunction variables
     var hrAnomaly = false
@@ -349,14 +350,11 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             
             //let pathForLog = "/Users/<YOURUSER>/heartrate.txt"
             //freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
-            //print(value)
-            
-            
+            print(value)
             // HEARTRATE ALG (NEEDS TESTING)
                         if (self.heartCounter < 120) {
                             // circular buffer of heartrate data
                             self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
-                            self.heartCounter = self.heartCounter + 1
             
                             if (self.index12 < 12) {
                                 self.tempSum = self.tempSum + value
@@ -449,16 +447,18 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             
                             // compute predicted probability
                             self.hrpval = (1.0 / (1.0 + exp(-1.0 * self.hrtval)))
-            
-                            print("Heart Rate Probability: " + String(self.hrpval))
                             // check for conjunction of both anomalies
 //                            if (self.hrAnomalyCount > self.HRANOMALYTHRESHOLD) {
 //                                self.hrAnomaly = false
 //                            }
 //                            
 //                            self.hrAnomalyCount += 1
-//                            
-//                            print("Heartrate probability " + String(self.hrpval))
+                            //
+                            if(self.hrpval >= 0.5 && self.count < 10) {
+                                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                                self.count+=1
+                            }
+                            print("Heartrate probability " + String(self.hrpval))
 //                            
 //                            if (self.motionAnomaly && self.hrAnomaly) {
 //                                
@@ -508,7 +508,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
 //                    print("Heartrate probability " + String(self.hrpval))
             
             self.heartCounter += 1
-            
+            print(self.heartCounter)
             
             // POST NOTIFICATION IF BOTH ANOMALIES ARE TRUE
             //if (self.accAnomaly == true && self.hrAnomaly == true) {
@@ -522,7 +522,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     func onTimerFire(timer: NSTimer) {
         NSLog("onTimerFire")
         displayElapsedTimer.stop()
-        WKInterfaceDevice.currentDevice().playHaptic(.Notification)
         timerStopButton.setTitle("Start Tracking")
         timerHasFired = true
         dismissController()
