@@ -19,12 +19,6 @@ class HealthKitManager {
         let healthDataToWrite = Set([HKObjectType.workoutType(),
             ])
         
-        /*
-         let healthDataToRead = Set(arrayLiteral: HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeight)!)
-         
-         let healthDataToWrite = Set(arrayLiteral: HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDistanceWalkingRunning)!)
-         */
-        // Just in case OneHourWalker makes its way to an iPad...
         if !HKHealthStore.isHealthDataAvailable() {
             print("Can't access HealthKit.")
         }

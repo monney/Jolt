@@ -1,10 +1,7 @@
 //
 //  timerRunningInterface.swift
-//  Jolt
-//
-//  Created by Neamah Hussein on 4/2/16.
+//  Jolt WatchKit Extension
 //  Copyright © 2016 JoltApp. All rights reserved.
-//
 
 import WatchKit
 import Foundation
@@ -60,7 +57,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     var MOTIONANOMALYTHRESHOLD = 9000
     var HRANOMALYTHRESHOLD = 60
     
-    // LOL MORE VARS
     var index10 = 0 // index into average array. Never exceeds 9
     var index12 = 0 // when this hits 12, compute average
     var tempSum = 0.0
@@ -69,10 +65,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     var hrtval = 0.0
     var hrpval = 0.0
     var backuphrval = 0.0 // save this away before overwriting a val in circ buffer
-    
-
-    
-    // create vars for constant time of 3 minutes for hr and acc
     
     
     //State of the app - is the workout activated
@@ -89,10 +81,8 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
         if (self.workoutActive) {
             //finish the current workout
             self.workoutActive = false
-            //self.startStopButton.setTitle("Start")
             if let workout = self.workoutSession {
                 healthStore.endWorkoutSession(workout)
-                //timerStopButton.setTitle("Start Tracking")
                 dismissController()
             }
         } else {
@@ -125,9 +115,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                     // calculate angle
                     let angle = atan((z) / sqrt((x * x) + (y * y))) * 180.0 / self.pi
                     
-                    /****************** ACCEL ALG ******************/
-                    
-                    // ACCEL ALG
+                    /****************** ACCEL ALGORITHM ******************/
                     
                     // first observation
                     if (self.motionCounter == 0) {
@@ -161,13 +149,13 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                             // compute predicted probability
                             self.motionpval = (1.0 / (1.0 + exp(-1.0 * self.motiontval)))
                             
-                            print("Accelerometer Probability: " + String(self.motionpval))
+                            // uncomment this line to read sleep probabilities related to accelerometer data as they are computed
+                            //print("Accelerometer Probability: " + String(self.motionpval))
                         }
                         
                     }
                     
                     if (self.motionCounter > 9000) {
-
                         
                         if (self.motionpval >= 0.50) {
                             self.motionAnomaly = true
@@ -182,19 +170,12 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                         
                         self.motionAnomalyCount += 1
                         
-//                        print("Motion probability " + String(self.motionpval))
-                        
-                        if (self.motionAnomaly && self.hrAnomaly) {
-                            
-                            // WAKE UP SCREEN
-                            self.contextForSegueWithIdentifier("dynNotificationSegue")
+                        // trigger haptic if both anomalies are true
+                        if (self.motionAnomaly == true && self.hrAnomaly == true && self.count < 10) {
+                            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                            self.count+=1
                         }
-                        
                     }
-                    
-                    
-                    /***********************************************/
-                    
                     
                 }
                 
@@ -219,7 +200,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
         self.timeElapsedGroup.setBackgroundImageNamed(imageString)
         timeLimit = Int(context! as! NSNumber)
         
-        //HK
         motionManager.accelerometerUpdateInterval = 0.02
     }
     
@@ -232,9 +212,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             WKInterfaceDevice.currentDevice().playHaptic(.Notification)
             dismissController()
         }
-        
-        
-        //HK
         
         guard HKHealthStore.isHealthDataAvailable() == true else {
             NSLog("HK data not available")
@@ -254,7 +231,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
         case .Ended:
             workoutDidEnd(date)
         default:
-            //print("Unexpected state \(toState)")
             NSLog("Unexpected state \(toState)")
         }
     }
@@ -293,8 +269,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     
     func createHeartRateStreamingQuery(workoutStartDate: NSDate) -> HKQuery? {
         NSLog("createHeartRateStreamingQuery")
-        // adding predicate will not work
-        // let predicate = HKQuery.predicateForSamplesWithStartDate(workoutStartDate, endDate: nil, options: HKQueryOptions.None)
         
         guard let sampleType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate) else {
             fatalError("Unable to create a heart rate sample type")
@@ -307,8 +281,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                             [unowned self](query, newSamples, deletedSamples, newAnchor, error) -> Void in
                                             
                                             guard let samples = newSamples as? [HKQuantitySample] else {
-                                                
-                                                //print("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
                                                 NSLog("*** Unable to query for heart rate: \(error?.localizedDescription) ***")
                                                 abort()
                                             }
@@ -317,7 +289,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                             
                                             self.updateHeartRate(samples)
                                             
-                                            //print("Done!")
                                             NSLog("Done!")
         }
         
@@ -342,16 +313,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             }
             let value = sample.quantity.doubleValueForUnit(self.heartRateUnit)
             
-            // original redirect code. if anyone can fix this that would be gr8
-            //let pathForLog = XCPSharedDataDirectoryPath.stringByAppendingPathComponent("dump.txt")
-            //let allPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            //let documentsDirectory = allPaths.first!
-            //let pathForLog = documentsDirectory.stringByAppendingString("/dump.txt")
-            
-            //let pathForLog = "/Users/<YOURUSER>/heartrate.txt"
-            //freopen(pathForLog.cStringUsingEncoding(NSASCIIStringEncoding)!, "r+", stdout)
-            print(value)
-            // HEARTRATE ALG (NEEDS TESTING)
+            /****************** HEARTRATE ALGORITHM ******************/
                         if (self.heartCounter < 120) {
                             // circular buffer of heartrate data
                             self.heartRateArray[self.heartCounter % self.heartBufferSize] = Double(value)
@@ -411,7 +373,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                 // this average uses the sentinel value
                                 if (i == ((self.heartCounter % self.heartBufferSize) / self.heartRateSampleNo)) {
             
-                                    // CHECK IF THIS IS RIGHT.
+                                    
                                     self.heartRateAvgArray[i] = (((self.heartRateAvgArray[i] * 12)
                                         - self.backuphrval)
                                         + self.heartRateArray[((self.heartCounter % self.heartBufferSize) + 12 * (i + 1)) % self.heartBufferSize]) /
@@ -419,7 +381,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                                 }
                                 else {
                                     // these averages do not use the sentinel value
-                                    // CHECK IF THIS IS RIGHT.
+                                    
                                     self.heartRateAvgArray[i] = (((self.heartRateAvgArray[i] * 12) -
                                         self.heartRateArray[((self.heartCounter % self.heartBufferSize) + 12 * i) % self.heartBufferSize])
                                         + self.heartRateArray[((self.heartCounter % self.heartBufferSize) + 12 * (i+1)) % self.heartBufferSize]) / Double(self.heartRateSampleNo)
@@ -447,77 +409,28 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             
                             // compute predicted probability
                             self.hrpval = (1.0 / (1.0 + exp(-1.0 * self.hrtval)))
-                            // check for conjunction of both anomalies
-//                            if (self.hrAnomalyCount > self.HRANOMALYTHRESHOLD) {
-//                                self.hrAnomaly = false
-//                            }
-//                            
-//                            self.hrAnomalyCount += 1
-                            //
-                            if(self.hrpval >= 0.5 && self.count < 10) {
-                                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
-                                self.count+=1
+                            
+                            if (self.hrAnomalyCount > self.HRANOMALYTHRESHOLD) {
+                                self.hrAnomaly = false
                             }
-                            print("Heartrate probability " + String(self.hrpval))
-//                            
-//                            if (self.motionAnomaly && self.hrAnomaly) {
-//                                
-//                                // WAKE UP SCREEN
-//                                self.contextForSegueWithIdentifier("dynNotificationSegue")
-//                            }
+                            self.hrAnomalyCount += 1
+                            
+                            // uncomment this line to read heartrate probabilities related to accelerometer data as they are computed
+                            // print("Heartrate probability " + String(self.hrpval))
                             
                         }
-            // TESTING CODE FOR CHECKING HR PROBABILITIES
-            
-            // p = 0.999999999
-            // self.heartRateDiffArray = [-0.33, -0.36, -0.45, -0.31, -0.37, -0.48, -0.32, -0.4, -0.42]
-            
-            // p = 0.999999999999942
-            //self.heartRateDiffArray = [-0.33, -0.25, -0.45, -0.53, -0.45, -0.48, -0.22, -0.4, -0.42]
-            
-            // p = 0.9901743463055
-            //self.heartRateDiffArray = [-0.33, 0.15, -0.45, -0.53, -0.45, -0.48, -0.22, -0.4, -0.42]
-            
-            // p = 4.88886044931938e-12
-            //self.heartRateDiffArray = [-0.33, 0.15, -0.45, -0.53, -0.45, -0.4, -0.22, 0.2, -0.42]
-            
-            // p = 1.39305724654427e-30
-            //self.heartRateDiffArray = [-0.33, 0.15, -0.45, -0.53, -0.45, 0.4, -0.22, 0.2, -0.42]
-            
-//                    self.tempSum = 0.0
-//                    self.tempSum = self.heartRateDiffArray.reduce(0, combine: +)
-//                    self.hrMean = (self.tempSum / 9.0)
-//            
-//                    for i in 0 ... 8 {
-//                        self.hrVariance = self.hrVariance + (self.heartRateDiffArray[i] - self.hrMean) * (self.heartRateDiffArray[i] - self.hrMean)
-//                    }
-//                    self.hrVariance = (self.hrVariance / 9.0)
-//            
-//                    // plug in the intercept and the coeffs to derive t
-//                    self.hrtval = -35.432 + (-186.129 * self.hrMean) + (-645.955 * self.hrVariance)
-//            
-//                    // compute predicted probability
-//                    self.hrpval = (1.0 / (1.0 + exp(-1.0 * self.hrtval)))
-//                    
-//                    if (self.hrpval >= 0.50) {
-//                        self.hrAnomaly = true
-//                    } else {
-//                        self.hrAnomaly = false
-//                    }
-//                    
-//                    print("Heartrate probability " + String(self.hrpval))
             
             self.heartCounter += 1
-            print(self.heartCounter)
             
-            // POST NOTIFICATION IF BOTH ANOMALIES ARE TRUE
-            //if (self.accAnomaly == true && self.hrAnomaly == true) {
-            //   self.notificationCenter.postNotification(NSNotification(name: "bobble", object: nil))
-            //}
+            // trigger haptic if both anomalies are true
+            if (self.motionAnomaly == true && self.hrAnomaly == true && self.count < 10) {
+               WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                self.count+=1
+            }
             
         }
     }
-    
+    /*************************************/
     
     func onTimerFire(timer: NSTimer) {
         NSLog("onTimerFire")
@@ -537,7 +450,6 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     }
     
     override func contextForSegueWithIdentifier(segueIdentifier: String) -> AnyObject? {
-        //presentControllerWithName("timerRunningInterface", context: selectedTime)
         return self
     }
     

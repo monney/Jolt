@@ -1,10 +1,7 @@
 //
 //  InterfaceController.swift
 //  Jolt WatchKit Extension
-//
-//  Created by Manbir Gulati on 3/21/16.
 //  Copyright © 2016 JoltApp. All rights reserved.
-//
 
 import WatchKit
 import Foundation
@@ -25,7 +22,6 @@ class InterfaceController: WKInterfaceController {
     }
     
     override func contextForSegueWithIdentifier(segueIdentifier: String) -> AnyObject? {
-        //presentControllerWithName("timerRunningInterface", context: selectedTime)
         return selectedTime
     }
     
@@ -45,7 +41,6 @@ class InterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        // Configure interface objects here.
     }
 
     override func willActivate() {
