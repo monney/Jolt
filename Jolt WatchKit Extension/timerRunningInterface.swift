@@ -21,6 +21,10 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
     weak var timer: NSTimer?
     var timerHasFired = false
     
+    // counter vars
+    var counterHK = 0
+    var counterMotion = 0
+    
     // HK
     let healthStore = HKHealthStore()
     let notificationCenter = NSNotificationCenter()
@@ -115,6 +119,13 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                     // calculate angle
                     let angle = atan((z) / sqrt((x * x) + (y * y))) * 180.0 / self.pi
                     
+                    
+//                    self.counterMotion = self.counterMotion + 1
+//                    if (self.counterMotion  == 500) {
+//                        print ("Motion = " + String(angle))
+//                        self.counterMotion = 0
+//                    }
+                    
                     /****************** ACCEL ALGORITHM ******************/
                     
                     // first observation
@@ -150,7 +161,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                             self.motionpval = (1.0 / (1.0 + exp(-1.0 * self.motiontval)))
                             
                             // uncomment this line to read sleep probabilities related to accelerometer data as they are computed
-                            //print("Accelerometer Probability: " + String(self.motionpval))
+                            print("Probability: " + String(self.motionpval) + "  " + String(self.motionAnomaly))
                         }
                         
                     }
@@ -172,6 +183,13 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                         
                         // trigger haptic if both anomalies are true
                         if (self.motionAnomaly == true && self.hrAnomaly == true && self.count < 10) {
+                            print ("you're asleep yo")
+                            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                            WKInterfaceDevice.currentDevice().playHaptic(.Notification)
                             WKInterfaceDevice.currentDevice().playHaptic(.Notification)
                             self.count+=1
                         }
@@ -313,6 +331,12 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             }
             let value = sample.quantity.doubleValueForUnit(self.heartRateUnit)
             
+//            self.counterHK = self.counterHK + 1
+//            if (self.counterHK  == 2) {
+//                print ("HK = " + String(value))
+//                self.counterHK = 0
+//            }
+//            
             /****************** HEARTRATE ALGORITHM ******************/
                         if (self.heartCounter < 120) {
                             // circular buffer of heartrate data
@@ -355,6 +379,7 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             
                             if (self.hrpval >= 0.50) {
                                 self.hrAnomaly = true
+                                
                             } else {
                                 self.hrAnomaly = false
                             }
@@ -410,13 +435,20 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
                             // compute predicted probability
                             self.hrpval = (1.0 / (1.0 + exp(-1.0 * self.hrtval)))
                             
+                            if (self.hrpval >= 0.50) {
+                                self.hrAnomaly = true
+                                self.hrAnomalyCount = 0
+                            } else {
+                                self.hrAnomaly = false
+                            }
+                            
                             if (self.hrAnomalyCount > self.HRANOMALYTHRESHOLD) {
                                 self.hrAnomaly = false
                             }
                             self.hrAnomalyCount += 1
                             
                             // uncomment this line to read heartrate probabilities related to accelerometer data as they are computed
-                            // print("Heartrate probability " + String(self.hrpval))
+                            // print("Heartrate probability " + String(self.hrpval) + "  " + String(self.hrAnomaly))
                             
                         }
             
@@ -424,7 +456,14 @@ class timerRunningInterface: WKInterfaceController, HKWorkoutSessionDelegate {
             
             // trigger haptic if both anomalies are true
             if (self.motionAnomaly == true && self.hrAnomaly == true && self.count < 10) {
-               WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                print ("you're asleep yo")
+                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
+                WKInterfaceDevice.currentDevice().playHaptic(.Notification)
                 self.count+=1
             }
             
